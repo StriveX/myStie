@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+        <script type="text/javascript">
+            $(function(){
+                $('#add').click(function() {
+                    var data = {};
+                    <% columnInfos.forEach(function(colInfo) { %>
+                        var value = $("#<%= colInfo['Field'] %>").val()
+                        if (value == "") {
+                            alert("All data are required.");
+                            return;
+                        }
+                        data.<%= colInfo['Field'] %> = $("#<%= colInfo['Field'] %>").val();
+                    <% }) %>
+                    console.log('click');
+                    $.ajax({
+                        type: 'POST',
+                        data: JSON.stringify(data),
+                        contentType: 'application/json',
+                        url: 'http://localhost:3000/collection/<%= table %>',                
+                        success: function(data) {}
+                    });
+
+                    var newRow = '<div class="row">';
+                    for (var key in data) {
+                            newRow += '<div class="cell">' + data[key] + '</div>';
+                    }
+                    newRow += '<div class="cell icon"><i class="fa fa-pencil"></i></div><div class="cell icon"><i class="fa fa-times"></i></div> </div>';
+                    $(newRow).insertAfter("#insert");
+                    $("div.cell:first-child" ).hide();
+                    $("div.cell:nth-last-of-type(3)" ).hide();
+                });
+            })
+            $(function(){
+                $('#cancel').click(function() {
+                    $('input').val('');
+                });
+            })
+            $(function(){
+                $('#delete').click(function() {
+                    $.ajax({
+                        type: 'DELETE',
+                        data: [],
+                        contentType: 'application/json',
+                        url: 'http://localhost:3000/collection/<%= table %>',            // PROBLEM here!!!                   
+                        success: function(data) {}
+                    });
+                });
+            })
+            $(document).ready(function() {
+                $("div.cell:first-child" ).hide();
+                $("div.cell:nth-last-of-type(3)" ).hide();
+            });
+        </script>
+    </head>
+    <body>
+        <% include menu %>
+        <div class="wrapper">
+        <div class="table">
+            <div class="row header blue">
+                <% columnInfos.forEach(function(colInfo) { %>
+                <div class="cell">
+                    <%= colInfo['Field'] %>
+                </div>
+                <% }) %>
+                <div class="cell"></div>
+                <div class="cell icon">
+                    <a class="btn btn-danger" href="#">
+                        <i class="fa fa-trash-o fa-lg" id="delete"></i></a>
+                </div>
+            </div>
+
+            <div class="row" id="insert">
+                
+
+                <div class="cell">No id</div>
+                <% for (var i=1;i<columnInfos.length-1;i++) { %>
+                    <div class="cell">
+                        <input type='text' name='data[<%= columnInfos[i]['Field']%>]' 
+                                           id='<%= columnInfos[i]['Field'] %>' 
+                                           placeholder='<%= columnInfos[i]['Type']%>' />
+                    </div>
+                <% } %>
+                <div class="cell">No user</div>
+
+                <div class="cell icon" id="add"><i class="fa fa-plus-square"></i></div>
+                <div class="cell icon" id="cancel"><i class="fa fa-minus-square"></i></div>
+            </div>
+
+            <% collections.forEach(function(row) { %>
+                <div class="row">
+                <% for (var key in row) { %>
+                    <div class="cell">
+                    <%= row[key] %>
+                    </div>
+                <% } %>
+                <div class="cell icon"><i class="fa fa-pencil"></i></div>
+                <div class="cell icon"><i class="fa fa-times"></i></div>
+                </div>
+            <% }) %>
+        </div>
+        </div>
+    
+    <%# include pager %>
+
+    </body>
+</html>

@@ -1,0 +1,32 @@
+				<header id="header">
+					<h1><a href="/">DataLoop</a> by Xi Zhu</h1>
+					<nav id="nav">
+						<ul>
+							<li><a href="/dataloop">Back</a></li>
+							<li>
+								<a href="#" class="icon fa-angle-down">Layouts</a>
+								<ul>
+									<li><a href="generic.html">Generic</a></li>
+									<li><a href="contact.html">Contact</a></li>
+									<li><a href="elements.html">Elements</a></li>
+									<li>
+										<a href="#">Submenu</a>
+										<ul>
+											<li><a href="#">Option One</a></li>
+											<li><a href="#">Option Two</a></li>
+											<li><a href="#">Option Three</a></li>
+											<li><a href="#">Option Four</a></li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+						<% if (locals.user) { %>
+							<li><a href="#"><%= user.name %></a></li>
+							<li><a href="/dataloop/logout" class="button">Logout</a></li>
+					    <% } else { %>
+							<li><a href="register" class="button">Sign Up</a></li>
+							<li><a href="login" class="button">Log In</a></li>
+						<% } %>
+						</ul>
+					</nav>
+				</header>

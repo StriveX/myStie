@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+        <script src="/javascripts/script.js" language="Javascript" type="text/javascript"></script>
+    </head>
+    <body>
+        <% include menu %>
+        <h1><%= title %></h1>
+        <p>Fill in the form below to add a new post.</p>
+        <% include messages %>
+        <form action='/entry' method='post'>
+            <p>
+                <input type='text' name='entry[name]' placeholder='Name' />
+            </p>
+            <div id='fields'>
+                <p>
+                    <input type='text' name='entry[field1]' placeholder='Filed' />
+                    <select name='entry[type1]'>
+                        <option value='INT'>Integer</option>
+                        <option value='FLOAT'>Float</option>
+                        <option value='DATE'>Date</option>
+                        <option value='TINYINT'>Selection</option>
+                    </select>
+                    <input type="button" value="New Field" onClick="addInput('fields');">
+                </p>
+            </div>
+            <p>
+                <input type='radio' name='entry[access]' value='0' checked>Public<br>
+                <input type='radio' name='entry[access]' value='1' <% if (!locals.user){ %>disabled<%}%> >Private
+            </p>
+            <p>
+                <textarea name='entry[description]' placeholder='Description (optional)'></textarea>
+            </p>
+            <p>
+                <input type='submit' value='Post' />
+            </p>
+            <a href="/">
+                <input type="button" value="Cancel" />
+            </a>
+            <input id='numField' name='entry[num]' type="hidden" value='1' />
+        </form>
+    </body>
+</html>
