@@ -43,8 +43,13 @@ app.use(user);
 app.use(message);
 
 app.get('/', function(req, res) {
-  res.sendfile('index.html');
+  res.sendFile('/dataloop/index.html');
 });
+app.get('/dataloop/idea', function(req, res) {
+  console.log("idea");
+  res.render('idea', { title: 'Post' });
+});
+
 
 // app.get('/dataloop', page(Entry.count, 5), entries.list);
 app.get('/dataloop/', entries.list);

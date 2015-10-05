@@ -2,6 +2,9 @@ var Entry = require('../lib/entry');
 
 exports.list = function(req, res, next) {
     console.log("here");
+    //userid = res.locals.user.id==null?res.locals.user.id:1;
+    var userid = 1;
+    if (res.locals.user!=null) userid = res.locals.user.id;
     Entry.getRange(1, 0, function(err, entries) {
         if (err) return next(err);
         res.render('dlindex', {                 // entries.ejs: display entry list on home page
@@ -42,7 +45,7 @@ exports.submit = function(req, res, next) {
                 if (err) return next(err);
                 newEntry.save(function(err) {
                     if (err) return next(err);
-                    res.redirect('/collection/'+data.name);
+                    res.redirect('/dataloop/'+data.name);
                 });
             });
         }

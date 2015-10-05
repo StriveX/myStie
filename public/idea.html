@@ -1,0 +1,137 @@
+<!--
+	Alpha by HTML5 UP
+	html5up.net | @n33co
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title><%= title %></title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+	</head>
+	<body class="landing">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<% include menu %>
+
+			<!-- Banner -->
+				<section id="banner">
+					<h2>The Idea</h2>
+					<p>Read from the world, analyse it, and give back your understanding - this is how we learn, so does machine</p>
+				</section>
+
+			<!-- Main -->
+				<section id="main" class="container">
+					<section class="box special">
+						<header class="major">
+							<h2>The Story</h2>
+							<p>There was a morning when I heard my mom complained about the plants she has taken care of didn't growed well. She also mentioned that this plants used to growing well before it was grafted from her friend. For the next few days, we kept considering the possible cause by comparing how the environment differed. Finally, among all the ideas, one is that we lived on six floor of an apartment, while my mom's friend used to raise them in her yard. This doesn't make sense at first, since nobody believe this is the key. However, after moving the plants to the ground for a few days, they became healthy and lively. We think the difference in the altitude results in lots of factors: humidity, sunshine, ultraviolet ray, temperature. There are also other factors like enriched soil, watering frequency.</br>
+							This is how I am inspired of the importance of using data to help in our lifes. The world is full of information that could be used to explain what happened around us. I always have such kind of questions: Why some people are more energetic everyday? Why some people are less easily to catch a cold? Why some people build their muscle faster when working out? The answers can be found in each detail of our life, while some of which are just incredible. This is exactly what scientists do: when they are facing a problem, they collect enough data, analysis them to discover the regularities and give it an explanation. But mostly, people don't know how to collect the data; even they have the data, they don't know how to use it. It could be hard to discover some of them and find out the true reason.</br>
+							My idea is set up a system that allows people their own topic, and everyone who is involved is encouraged to share his own data. With more and more data we collected, we could start our analysis. This is where machine learning could step in. With the progress in machine learning, it reveals may return interesting and useful result. 
+							Recently, there are already companies data analysis with machine learning to guide instituions with their business. This is fantasitic. But individual also want the chance to contribute data and to understand their life more. Therefore, I build the DataLoop - a loop that collects data from people, makes use of the data, and returns something valuable back to them.</br>
+							This is a prototype of my idea. Now it could only accepts at most eight factors for analysis and data of integer, floating number, and date. The machine learning in the backgroung only includes basic algorithm like k-Means and regression. In the future, I would like to make it more scalable (more factors and also cross-topic), more data sources (image, text), and more ways to learn about them (support vector machine, neural network).</p>
+						</header>
+						<span class="image featured"><img src="images/pic01.jpg" alt="" /></span>
+					</section>
+
+					<section class="box special">
+						<header class="major">
+							<h2>Introducing the ultimate mobile app
+							<br />
+							for doing stuff with your phone</h2>
+							<p>Blandit varius ut praesent nascetur eu penatibus nisi risus faucibus nunc ornare<br />
+							adipiscing nunc adipiscing. Condimentum turpis massa.</p>
+						</header>
+						<span class="image featured"><img src="images/pic01.jpg" alt="" /></span>
+					</section>
+				</section>
+
+			<!-- Footer -->
+				<footer id="footer">
+					<ul class="icons">
+						<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+						<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+						<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+						<li><a href="#" class="icon fa-github"><span class="label">Github</span></a></li>
+						<li><a href="#" class="icon fa-dribbble"><span class="label">Dribbble</span></a></li>
+						<li><a href="#" class="icon fa-google-plus"><span class="label">Google+</span></a></li>
+					</ul>
+				</footer>
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/jquery.scrollgress.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+			<script>
+				var minColumn = 2;
+				var maxColumn = 8;
+				var currentColumn = 2;
+				var names = [];
+				for (var i=3; i<=maxColumn; i++) {
+					names.push(i);
+				}
+				console.log("origianl names", names);
+				$(document).ready(function(){
+  					$(".anchorLink").click(function(e){
+    					e.preventDefault();
+					    var id     = $(this).attr("href");
+					    var offset = $(id).offset();
+					    $("html, body").animate({
+      						scrollTop: offset.top
+    					}, 300);
+  					});
+				});
+				$('#addColumn').click(function() {
+					if (currentColumn <= maxColumn) {
+						currentColumn += 1;
+						console.log("before add: ", currentColumn);
+						var useIndex = names.pop();
+						console.log("use index", useIndex);
+						var newdiv = document.createElement('div');
+						$(newdiv).addClass("row uniform 50%");
+						newdiv.innerHTML = '<div class="6u 12u(mobilep)">'
+										 + '	<input type="text" name="entry[field' + useIndex + ']" id="name" value="" placeholder="Column Name" />'
+										 + '</div>'
+										 + '<div class="3u">'
+										 + '	<div class="select-wrapper">'
+										 + '		<select name="type' + useIndex + '" id="category">'
+										 + '			<option value="">- Type -</option>'
+										 + '			<option value="1">Integer</option>'
+										 + '			<option value="1">Floating</option>'
+										 + '			<option value="1">Date</option>'
+										 + '			<option value="1">Selection</option>'
+										 + '		</select>'
+										 + '	</div>'
+										 + '</div>'
+										 + '<div class="3u 12u(mobilep)">'
+										 + '<a href="javascript: void(0)" class="button removeColumn" id="removeColumn" index="'+ useIndex + '">Remove</a>'
+										 + '</div>';
+						console.log(newdiv);
+						$('#accessSetting').before(newdiv);
+						console.log("after add: ", currentColumn);
+					}
+				});
+				$(document).on('click', '.removeColumn', function() {
+					if (currentColumn >= maxColumn) {
+						currentColumn -= 1;
+						names.push($(this).attr("index"));
+						console.log("current names", names);
+						console.log("before remove: ", currentColumn);
+				    	$(this).parent().parent().remove();
+				    	console.log("after remove: ", currentColumn);
+				    }
+				});
+			</script>
+
+	</body>
+</html>

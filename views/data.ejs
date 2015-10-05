@@ -11,6 +11,16 @@
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<style>
+			tr td:last-child{
+			    width:1%;
+			    white-space:nowrap;
+			}
+			tr td:nth-last-of-type(2){
+			    width:1%;
+			    white-space:nowrap;
+			}
+		</style>
 	</head>
 	<body class="landing">
 		<div id="page-wrapper">
@@ -20,11 +30,11 @@
 
 			<!-- Banner -->
 				<section id="banner">
-					<h2>DataLoop</h2>
-					<p>How data loop in my mind.</p>
+					<h2><%= title %></h2>
+				<!--	<p>How data loop in my mind.</p> -->
 					<ul class="actions">
-						<li><a href="#newRepository" class="button special anchorLink">Get Start</a></li>
-						<li><a href="#Introduction" class="button anchorLink">Learn More</a></li>
+						<li><a href="/dataloop/" class="button special anchorLink">Back</a></li>
+				<!--	<li><a href="#Introduction" class="button anchorLink">Learn More</a></li>  -->
 					</ul>
 				</section>
 
@@ -32,145 +42,54 @@
 				<section id="main" class="container">
 
 					<section class="box">
-						<h3>Data Repositories</h3>
+						<h3><%= title %></h3>
 
 						<h4>Select data repository to contribute, or create your own repository for your purpose</h4>
 						<div class="table-wrapper">
 							<table>
+
 								<thead>
 									<tr>
-										<th>Id</th>
-										<th>Name</th>
-										<th>Description</th>
-										<th>Access</th>
+									<% columnInfos.forEach(function(colInfo) { %>
+										<th><%= colInfo['Field'] %></th>
+									<% }) %>
+									<th></th><th></th>
 									</tr>
 								</thead>
+
 								<tbody>
-								<% for(var i=0; i<entries.length; i++) { %>
 									<tr>
-										<td><%= i %></td>
-										<td><a href='/dataloop/<%= entries[i].name %>'><%= entries[i].name %></a></td>
-										<td><%= entries[i].description %></td>
-										<td><% if (entries[i].private) { %>Private<% } else { %>Public<% } %></td>
+									<td>Auto ID</td>
+									<% for (var i=1;i<columnInfos.length-1;i++) { %>
+	                    				<td>
+	                        				<input type='text' name='data[<%= columnInfos[i]['Field']%>]' 
+	                                           id='<%= columnInfos[i]['Field'] %>' 
+	                                           placeholder='<%= columnInfos[i]['Type']%>' />
+	                    				</td>
+	                				<% } %>
+		                				<td><% if (locals.user) { %><%= user.name %><% } else { %>Public<% } %></td>
+
+										<td><i class="fa fa-plus-square"></i></td>
+						                <td><i class="fa fa-minus-square"></i></td>
+
+	                				</tr>
+
+								<% collections.forEach(function(row) { %>
+									<tr>
+									<% for (var key in row) { %>
+										<td><%= row[key] %></td>
+									<% } %>
+
+										<td><i class="fa fa-pencil"></i></td>
+						                <td><i class="fa fa-times"></i></td>
+
 									</tr>
-								<% } %>
+								<% }) %>
 								</tbody>
+
 							</table>
 						</div>
 					</section>
-
-					<section class="box" id="newRepository">
-						<h3>New Repository</h3>
-						<form method="post" action="repository">
-							<div class="row uniform 50%">
-								<div class="6u 12u(mobilep)">
-									<input type="text" name="entry[name]" id="name" value="" placeholder="Name" />
-								</div>
-							</div>
-							<div class="row uniform 50%">
-								<div class="6u 12u(mobilep)">
-									<input type="text" name="name" id="name" value="" placeholder="Column Name" />
-								</div>
-								<div class="6u">
-									<div class="select-wrapper">
-										<select name="category" id="category">
-											<option value="">- Type -</option>
-											<option value="1">Integer</option>
-											<option value="1">Floating</option>
-											<option value="1">Date</option>
-											<option value="1">Selection</option>
-										</select>
-									</div>
-								</div>
-							</div>
-							<div class="row uniform 50%">
-								<div class="6u 12u(mobilep)">
-									<input type="text" name="name" id="name" value="" placeholder="Column Name" />
-								</div>
-								<div class="6u">
-									<div class="select-wrapper">
-										<select name="category" id="category">
-											<option value="">- Type -</option>
-											<option value="1">Integer</option>
-											<option value="1">Floating</option>
-											<option value="1">Date</option>
-											<option value="1">Selection</option>
-										</select>
-									</div>
-								</div>
-							</div>
-							<div class="row uniform 50%">
-								<div class="4u 12u(narrower)">
-									<input type="radio" id="priority-low" name="entry[access]" value="0" checked>
-									<label for="priority-low">Public</label>
-								</div>
-								<div class="4u 12u(narrower)">
-									<input type="radio" id="priority-high" name="entry[access] value="1">
-									<label for="priority-high">Private</label>
-								</div>
-							</div>
-							<div class="row uniform 50%">
-								<div class="12u">
-									<textarea name="entry[description]" id="message" placeholder="Description (Optional)" rows="6"></textarea>
-								</div>
-							</div>
-							<div class="row uniform">
-								<div class="12u">
-									<ul class="actions">
-										<li><input type="submit" value="Create" /></li>
-										<li><input type="reset" value="Reset" class="alt" /></li>
-									</ul>
-								</div>
-							</div>
-						</form>
-					</section>
-
-					<div class="row" id="Introduction">
-						<div class="6u 12u(narrower)">
-
-							<section class="box special">
-								<span class="image featured"><img src="images/pic02.jpg" alt="" /></span>
-								<h3>High-level Idea</h3>
-								<p>Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem aliquet ut enim rutrum phasellus iaculis accumsan dolore magna aliquam veroeros.</p>
-								<ul class="actions">
-									<li><a href="#" class="button alt">Learn More</a></li>
-								</ul>
-							</section>
-
-						</div>
-						<div class="6u 12u(narrower)">
-
-							<section class="box special">
-								<span class="image featured"><img src="images/pic03.jpg" alt="" /></span>
-								<h3>Accumsan integer</h3>
-								<p>Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem aliquet ut enim rutrum phasellus iaculis accumsan dolore magna aliquam veroeros.</p>
-								<ul class="actions">
-									<li><a href="#" class="button alt">Learn More</a></li>
-								</ul>
-							</section>
-
-						</div>
-					</div>
-
-				</section>
-
-			<!-- CTA -->
-				<section id="cta">
-
-					<h2>Sign up for beta access</h2>
-					<p>Blandit varius ut praesent nascetur eu penatibus nisi risus faucibus nunc.</p>
-
-					<form>
-						<div class="row uniform 50%">
-							<div class="8u 12u(mobilep)">
-								<input type="email" name="email" id="email" placeholder="Email Address" />
-							</div>
-							<div class="4u 12u(mobilep)">
-								<input type="submit" value="Sign Up" class="fit" />
-							</div>
-						</div>
-					</form>
-
 				</section>
 
 			<!-- Footer -->
@@ -198,20 +117,59 @@
 			<script src="assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="assets/js/main.js"></script>
-			<script>
-				$(document).ready(function(){
-  					$(".anchorLink").click(function(e){
-    					e.preventDefault();
- 
-					    var id     = $(this).attr("href");
-					    var offset = $(id).offset();
-					 
-					    $("html, body").animate({
-      						scrollTop: offset.top
-    					}, 300);
-  					});
-				});
-			</script>
+			<script type="text/javascript">
+	            $(function(){
+	                $('#add').click(function() {
+	                    var data = {};
+	                    <% columnInfos.forEach(function(colInfo) { %>
+	                        var value = $("#<%= colInfo['Field'] %>").val()
+	                        if (value == "") {
+	                            alert("All data are required.");
+	                            return;
+	                        }
+	                        data.<%= colInfo['Field'] %> = $("#<%= colInfo['Field'] %>").val();
+	                    <% }) %>
+	                    console.log('click');
+	                    $.ajax({
+	                        type: 'POST',
+	                        data: JSON.stringify(data),
+	                        contentType: 'application/json',
+	                        url: 'http://localhost:3000/collection/<%= table %>',                
+	                        success: function(data) {}
+	                    });
+
+	                    var newRow = '<div class="row">';
+	                    for (var key in data) {
+	                            newRow += '<div class="cell">' + data[key] + '</div>';
+	                    }
+	                    newRow += '<div class="cell icon"><i class="fa fa-pencil"></i></div><div class="cell icon"><i class="fa fa-times"></i></div> </div>';
+	                    $(newRow).insertAfter("#insert");
+	                    $("div.cell:first-child" ).hide();
+	                    $("div.cell:nth-last-of-type(3)" ).hide();
+	                });
+	            })
+	            $(function(){
+	                $('#cancel').click(function() {
+	                    $('input').val('');
+	                });
+	            })
+	            $(function(){
+	                $('#delete').click(function() {
+	                    $.ajax({
+	                        type: 'DELETE',
+	                        data: [],
+	                        contentType: 'application/json',
+	                        url: 'http://localhost:3000/collection/<%= table %>',            // PROBLEM here!!!                   
+	                        success: function(data) {}
+	                    });
+	                });
+	            })
+	            $(document).ready(function() {
+	                $("td:first-child, th:first-child" ).hide();
+	                $("td:nth-last-of-type(3), th:nth-last-of-type(3)" ).hide();
+	                //$("td:last-child, th:last-child" ).hide();
+	            });
+	        </script>
 
 	</body>
 </html>

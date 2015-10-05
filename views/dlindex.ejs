@@ -21,7 +21,7 @@
 			<!-- Banner -->
 				<section id="banner">
 					<h2>DataLoop</h2>
-					<p>How data loop in my mind.</p>
+					<p>World is complex. Data is helpful. People are just smart!</p>
 					<ul class="actions">
 						<li><a href="#newRepository" class="button special anchorLink">Get Start</a></li>
 						<li><a href="#Introduction" class="button anchorLink">Learn More</a></li>
@@ -61,7 +61,7 @@
 
 					<section class="box" id="newRepository">
 						<h3>New Repository</h3>
-						<form method="post" action="repository" id="newRep">
+						<form method="post" action="/dataloop/" id="newRep">
 							<div class="row uniform 50%">
 								<div class="6u 12u(mobilep)">
 									<input type="text" name="entry[name]" id="name" value="" placeholder="Name" />
@@ -72,11 +72,11 @@
 							</div>
 							<div class="row uniform 50%">
 								<div class="6u 12u(mobilep)">
-									<input type="text" name="name" id="name" value="" placeholder="Column Name" />
+									<input type="text" name="entry[field1]" id="name" value="" placeholder="Column Name" />
 								</div>
 								<div class="3u">
 									<div class="select-wrapper">
-										<select name="category" id="category">
+										<select name="entry[type1]" id="category">
 											<option value="">- Type -</option>
 											<option value="1">Integer</option>
 											<option value="1">Floating</option>
@@ -86,16 +86,16 @@
 									</div>
 								</div>
 								<div class="3u 12u(mobilep)">
-									<a href="#" class="button">Remove</a>
+									<a href="javascript: void(0)" class="button removeColumn" id="removeColumn" index="1">Remove</a>
 								</div>
 							</div>
 							<div class="row uniform 50%">
 								<div class="6u 12u(mobilep)">
-									<input type="text" name="name" id="name" value="" placeholder="Column Name" />
+									<input type="text" name="entry[field2]" id="name" value="" placeholder="Column Name" />
 								</div>
 								<div class="3u">
 									<div class="select-wrapper">
-										<select name="category" id="category">
+										<select name="entry[type2]" id="category">
 											<option value="">- Type -</option>
 											<option value="1">Integer</option>
 											<option value="1">Floating</option>
@@ -104,8 +104,11 @@
 										</select>
 									</div>
 								</div>
+								<div class="3u 12u(mobilep)">
+									<a href="javascript: void(0)" class="button removeColumn" id="removeColumn" index="2">Remove</a>
+								</div>
 							</div>
-							<div class="row uniform 50%">
+							<div class="row uniform 50%" id="accessSetting">
 								<div class="4u 12u(narrower)">
 									<input type="radio" id="priority-low" name="entry[access]" value="0" checked>
 									<label for="priority-low">Public</label>
@@ -136,10 +139,10 @@
 
 							<section class="box special">
 								<span class="image featured"><img src="images/pic02.jpg" alt="" /></span>
-								<h3>High-level Idea</h3>
-								<p>Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem aliquet ut enim rutrum phasellus iaculis accumsan dolore magna aliquam veroeros.</p>
+								<h3>Idea</h3>
+								<p>Everyone could be a source of data - it's the information of your life. Data are more valuable only when they are together. The idea behind DataLoop is to give everyone the chance to share his data and get back those valuable </p>
 								<ul class="actions">
-									<li><a href="#" class="button alt">Learn More</a></li>
+									<li><a href="/dataloop/idea" class="button alt">Learn More</a></li>
 								</ul>
 							</section>
 
@@ -205,6 +208,14 @@
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="assets/js/main.js"></script>
 			<script>
+				var minColumn = 2;
+				var maxColumn = 8;
+				var currentColumn = 2;
+				var names = [];
+				for (var i=3; i<=maxColumn; i++) {
+					names.push(i);
+				}
+				console.log("origianl names", names);
 				$(document).ready(function(){
   					$(".anchorLink").click(function(e){
     					e.preventDefault();
@@ -216,24 +227,44 @@
   					});
 				});
 				$('#addColumn').click(function() {
-					var newdiv = document.createElement('div');
-					//newdiv.addClass("row uniform 50%");
-					newdiv.innerHTML = '<div class="6u 12u(mobilep)">'
-									 + '	<input type="text" name="name" id="name" value="" placeholder="Column Name" />'
-									 + '</div>'
-									 + '<div class="3u">'
-									 + '	<div class="select-wrapper">'
-									 + '		<select name="category" id="category">'
-									 + '			<option value="">- Type -</option>'
-									 + '			<option value="1">Integer</option>'
-									 + '			<option value="1">Floating</option>'
-									 + '			<option value="1">Date</option>'
-									 + '			<option value="1">Selection</option>'
-									 + '		</select>'
-									 + '	</div>'
-									 + '</div>';
-					console.log(newdiv);
-					document.getElementById("newRep").appendChild(newdiv);
+					if (currentColumn <= maxColumn) {
+						currentColumn += 1;
+						console.log("before add: ", currentColumn);
+						var useIndex = names.pop();
+						console.log("use index", useIndex);
+						var newdiv = document.createElement('div');
+						$(newdiv).addClass("row uniform 50%");
+						newdiv.innerHTML = '<div class="6u 12u(mobilep)">'
+										 + '	<input type="text" name="entry[field' + useIndex + ']" id="name" value="" placeholder="Column Name" />'
+										 + '</div>'
+										 + '<div class="3u">'
+										 + '	<div class="select-wrapper">'
+										 + '		<select name="type' + useIndex + '" id="category">'
+										 + '			<option value="">- Type -</option>'
+										 + '			<option value="1">Integer</option>'
+										 + '			<option value="1">Floating</option>'
+										 + '			<option value="1">Date</option>'
+										 + '			<option value="1">Selection</option>'
+										 + '		</select>'
+										 + '	</div>'
+										 + '</div>'
+										 + '<div class="3u 12u(mobilep)">'
+										 + '<a href="javascript: void(0)" class="button removeColumn" id="removeColumn" index="'+ useIndex + '">Remove</a>'
+										 + '</div>';
+						console.log(newdiv);
+						$('#accessSetting').before(newdiv);
+						console.log("after add: ", currentColumn);
+					}
+				});
+				$(document).on('click', '.removeColumn', function() {
+					if (currentColumn >= maxColumn) {
+						currentColumn -= 1;
+						names.push($(this).attr("index"));
+						console.log("current names", names);
+						console.log("before remove: ", currentColumn);
+				    	$(this).parent().parent().remove();
+				    	console.log("after remove: ", currentColumn);
+				    }
 				});
 			</script>
 
