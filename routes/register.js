@@ -6,6 +6,7 @@ exports.form = function(req, res) {
 
 exports.submit = function(req, res, next) {
 	var data = req.body.user;
+	console.log("register submit: ", data);
 	User.getByName(data.name, function(err, user){
 		if (err) return next(err);
 		if (user) {

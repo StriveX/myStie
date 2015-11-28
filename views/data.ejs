@@ -129,7 +129,6 @@
 	                        }
 	                        data.<%= colInfo['Field'] %> = $("#<%= colInfo['Field'] %>").val();
 	                    <% }) %>
-	                    console.log('click');
 	                    $.ajax({
 	                        type: 'POST',
 	                        data: JSON.stringify(data),

@@ -20,11 +20,6 @@ exports.form = function(req, res) {
 
 exports.submit = function(req, res, next) {
     var data = req.body.entry;
-    console.log("start", data);
-/*    if (!res.locals.user) {
-        res.error("You are log out.");
-    }
-    console.log("session user", res.locals.user);*/
     var owner = 1;
     if (data.private=='1') {
         owner = res.locals.user.id;

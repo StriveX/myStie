@@ -8,16 +8,21 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var methodOverride = require('method-override');
 
-var message = require('./lib/messages');
-
+/***** Middle ware *****/
 var user = require('./lib/middleware/user');
 var page = require('./lib/middleware/page');
-var Entry = require('./lib/entry');
+var auth = require('./lib/middleware/auth');
+
+var message = require('./lib/messages');
+var entry = require('./lib/entry');
+var post = require('./lib/blog/post');
 
 var register = require('./routes/register');
 var login = require('./routes/login');
 var entries = require('./routes/entries');
 var collection = require('./routes/collections');
+
+var blog = require('./routes/blogs');
 
 var app = express();
 
@@ -39,44 +44,57 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// middle ware HERE!
 app.use(user);
 app.use(message);
 
 app.get('/', function(req, res) {
-  res.sendFile('/dataloop/index.html');
-});
-app.get('/dataloop/idea', function(req, res) {
-  console.log("idea");
-  res.render('idea', { title: 'Post' });
+  //res.sendFile(path.join(__dirname, 'public/idea'));
+  res.render('index', { title: 'Home' });
 });
 
-
-// app.get('/dataloop', page(Entry.count, 5), entries.list);
+// app.get('/dataloop', page(entry.count, 5), entries.list);
 app.get('/dataloop/', entries.list);
 app.post('/dataloop/', entries.submit);
 
 app.get('/dataloop/register', register.form);
 app.post('/dataloop/register', register.submit);
 
-app.get('/dataloop/login', login.form);
-app.post('/dataloop/login', login.submit);
-app.get('/dataloop/logout', login.logout);
+app.get('/login', login.form);
+app.post('/login', login.submit);
+app.get('/logout', login.logout);
 
-app.get('/dataloop/repository', entries.form);
-//app.post('/dataloop/repository', entries.submit);
+app.get('/dataloop/idea', function(req, res) {
+  res.render('idea', { title: 'Idea' });
+  //res.sendFile(path.join(__dirname, '/public', 'idea.html'));
+});
 
 app.get('/dataloop/:name', collection.form);
 app.post('/dataloop/:name', collection.submit);
 app.delete('/dataloop/:name', collection.remove);
 
+
+/****** BLOG Routings. ******/
+app.get('/blog', auth.restrict, function(req, res) {res.render('public/blog');});
+app.get('/blog/:type/:page?/:perpage?', page(post.count), blog.list);
+app.get('/manage', auth.permission('onwer'), page(post.count), blog.list);
+app.post('/manage', auth.permission('onwer'), function(req, res) {res.render('manage');});
+/****************************/
+
+
+// ERROR HANDLERS
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
+
+  res.render('invalid', {
+    title: 'Not Found',
+    message: 'This page does not exist.'
+  });
+
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
-
-// error handlers
 
 // development error handler
 // will print stacktrace

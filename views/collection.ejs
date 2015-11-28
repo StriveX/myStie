@@ -35,13 +35,9 @@
                     $("div.cell:first-child" ).hide();
                     $("div.cell:nth-last-of-type(3)" ).hide();
                 });
-            })
-            $(function(){
                 $('#cancel').click(function() {
                     $('input').val('');
                 });
-            })
-            $(function(){
                 $('#delete').click(function() {
                     $.ajax({
                         type: 'DELETE',
@@ -51,8 +47,6 @@
                         success: function(data) {}
                     });
                 });
-            })
-            $(document).ready(function() {
                 $("div.cell:first-child" ).hide();
                 $("div.cell:nth-last-of-type(3)" ).hide();
             });

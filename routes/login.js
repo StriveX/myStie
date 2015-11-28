@@ -10,7 +10,10 @@ exports.submit = function(req, res, next) {
 		if (err) return next(err);
 		if (user) {
 			req.session.uid = user.id;
-			res.redirect('/dataloop/');
+			req.session.group = user.group_name;
+			var redirect_to = req.session.redirect_to ? req.session.redirect_to : '/';
+			delete req.session.redirect_to;
+			res.redirect(redirect_to);
 		} else {
 			res.error("Invalid user or password.");
 			res.redirect('back');
@@ -21,6 +24,8 @@ exports.submit = function(req, res, next) {
 exports.logout = function(req, res) {
 	req.session.destroy(function(err){
 		if (err) throw err;
-		res.redirect('/dataloop/');
+		var redirect_to = req.session.redirect_to ? req.session.redirect_to : '/';
+		delete req.session.redirect_to;
+		res.redirect(redirect_to);
 	})
 };

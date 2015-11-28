@@ -9,9 +9,7 @@
 		<title>Contact - Alpha by HTML5 UP</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<link rel="stylesheet" href="blog/assets/css/main.css" />
 	</head>
 	<body>
 		<div id="page-wrapper">
@@ -20,24 +18,24 @@
 				<% include menu %>
 
 			<!-- Main -->
-				<section id="main" class="container 75%">
+				<section id="main" class="container 25%">
 					<header>
 						<h2>Log In</h2>
 					</header>
 					<div class="box">
-						<form method="post" action="/dataloop/login" onsubmit="return checkForm()">
+						<form method="post" action="/login" onsubmit="return checkForm()">
 							<div class="row uniform 50%">
-								<div class="6u 12u(mobilep)">
+								<div class="12u">
 									<input type="text" name="user[name]" id="name" value="" placeholder="Name" />
 								</div>
 							</div>
 							<div class="row uniform 50%">
-								<div class="6u 12u(mobilep)">
+								<div class="12u">
 									<input type="password" name="user[pass]" id="password" value="" placeholder="Password" />
 								</div>
 							</div>
 							<div class="row uniform">
-								<div class="12u">
+								<div class="6u 12u">
 									<ul class="actions align-center">
 										<li><input type="submit" value="Log in" /></li>
 									</ul>
@@ -46,6 +44,15 @@
 						</form>
 					</div>
 				</section>
+
+
+
+
+
+
+
+
+
 
 			<!-- Footer -->
 				<footer id="footer">
