@@ -70,7 +70,6 @@ app.get('/dataloop/:name', collection.form);
 app.post('/dataloop/:name', collection.submit);
 app.delete('/dataloop/:name', collection.remove);
 
-
 /****** BLOG Routings. ******/
 app.get('/blog', auth.restrict, function(req, res) {res.render('public/blog');});
 app.get('/blog/:type/:page?/:perpage?', page(post.count), blog.list);
