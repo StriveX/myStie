@@ -6,53 +6,73 @@
 -->
 <html>
     <head>
-        <title><%= title %></title>
+        <title>Sign Up</title>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-        <link rel="stylesheet" href="assets/css/main.css" />
-        <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+        <link rel="stylesheet" href="/blog/assets/css/main.css" />
     </head>
     <body>
         <div id="page-wrapper">
 
             <!-- Header -->
+                <% var status = 'register' %>
                 <% include menu %>
 
-            <!-- Main -->
-                <section id="main" class="container 75%">
-                    <header>
-                        <h2>Sign Up</h2>
-                        <p>Sign up to make your custom data.</p>
-                    </header>
-                    <div class="box">
-                        <form method="post" action="/dataloop/register" onsubmit="return checkForm()">
-                            <div class="row uniform 50%">
-                                <div class="6u 12u(mobilep)">
-                                    <input type="text" name="user[name]" id="name" value="" placeholder="Name" />
+                <div id="main" class="wrapper style1">
+                    <div class="container">
+                        <header class="major">
+                            <h2>Sign Up</h2>
+                            <% include messages %>
+                        </header>
+                    <!-- Table -->
+                        <section class="container 50%">
+                            <div class="box">
+                                <form method="post" action="/register" onsubmit="return checkForm()" autocomplete="off">
+                                    <div class="row uniform 50%">
+                                        <div class="6u 12u">
+                                            <input type="text" name="user[name]" id="name" value="" placeholder="Name" />
+                                        </div>
+                                        <div class="6u 12u">
+                                            <input type="text" name="user[email]" id="email" value="" placeholder="Email" />
+                                        </div>
+                                    </div>
+                                    <div class="row uniform 50%">
+                                        <div class="12u">
+                                            <input type="password" name="user[pass]" id="password" value="" placeholder="Password" />
+                                        </div>
+                                    </div>
+                                    <div class="row uniform 50%">
+                                        <div class="12u">
+                                            <input type="password" id="passwordAgain" value="" placeholder="Password Again" />
+                                        </div>
+                                    </div>
+                                <div class="row uniform 50%">
+                                    <div class="6u 12u$(medium)">
+                                        <input type="radio" id="friend" name="user[group]" value='friend' checked>
+                                        <label for="friend">Friend</label>
+                                    </div>
+                                    <div class="6u 12u$(medium)">
+                                        <input type="radio" id="employer" name="user[group]" value='employer'>
+                                        <label for="employer">Employer</label>
+                                    </div>
                                 </div>
-                                <div class="6u 12u(mobilep)">
-                                    <input type="email" name="user[email]" id="email" value="" placeholder="Email" />
+                                <div class="row uniform 50%" id='info_box'>
+                                    <div class="12u">
+                                        <input type="text" name="user[info]" id="info" value="" placeholder="Company Name" />
+                                    </div>
                                 </div>
+                                <div class="row uniform 50%">
+                                    <div class="12u">
+                                        <ul class="actions fit">
+                                            <li><input type="submit" value="Sign Up" class="button fit special" /></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                </form>
                             </div>
-                            <div class="row uniform 50%">
-                                <div class="6u 12u(mobilep)">
-                                    <input type="password" name="user[pass]" id="password" value="" placeholder="Password" />
-                                </div>
-                                <div class="6u 12u(mobilep)">
-                                    <input type="password" name="user[passAgain]" id="passwordAgain" value="" placeholder="Password again" />
-                                </div>
-                            </div>
-                            <div class="row uniform">
-                                <div class="12u">
-                                    <ul class="actions align-center">
-                                        <li><input type="submit" value="Sign up" /></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </form>
+                        </section>
                     </div>
-                </section>
+                </div>
 
             <!-- Footer -->
                 <footer id="footer">
@@ -72,11 +92,12 @@
         </div>
 
         <!-- Scripts -->
-            <script src="assets/js/jquery.min.js"></script>
-            <script src="assets/js/jquery.dropotron.min.js"></script>
-            <script src="assets/js/jquery.scrollgress.min.js"></script>
-            <script src="assets/js/skel.min.js"></script>
-            <script src="assets/js/util.js"></script>
+            <script src="blog/assets/js/jquery.min.js"></script>
+            <script src="blog/assets/js/jquery.scrolly.min.js"></script>
+            <script src="blog/assets/js/jquery.dropotron.min.js"></script>
+            <script src="blog/assets/js/jquery.scrollex.min.js"></script>
+            <script src="blog/assets/js/skel.min.js"></script>
+            <script src="blog/assets/js/util.js"></script>
             <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
             <script src="assets/js/main.js"></script>
             <script>
@@ -87,6 +108,17 @@
                     if (name.value == "") {
                         name.style.borderColor = "#E34234";
                         ok = false;
+                    }
+                    var email = document.getElementById("email");
+                    if (email.value == "") {
+                        email.style.borderColor = "#E34234";
+                        ok = false;
+                    } else {
+                        var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+                        if (!re.test(email.value)) {
+                            email.style.borderColor = "#E34234";
+                            ok=false;
+                        }
                     }
                     var pass1 = document.getElementById("password");
                     var pass2 = document.getElementById("passwordAgain");
@@ -107,6 +139,20 @@
                     }
                     return ok;
                 }
+
+                $(document).ready(function () {
+                    $('#info_box').hide();
+                    $('input[name="user[group]"]:radio').change(function () {
+                        switch ($(this).val()) {
+                            case 'friend':
+                                $('#info_box').hide();
+                                break;
+                            case 'employer':
+                                $('#info_box').show();
+                                break;
+                        }
+                    });
+                });
             </script>
 
     </body>

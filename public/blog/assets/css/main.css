@@ -2163,6 +2163,12 @@
 		margin: 0 0 1em 0;
 	}
 
+	input:-webkit-autofill {
+	    -webkit-box-shadow: inset 1px 1px 1px 1000px #20222c;
+	    -webkit-text-fill-color: #999;
+	}
+
+	input:-webkit-autofill,
 	input[type="text"],
 	input[type="password"],
 	input[type="email"],
@@ -2185,6 +2191,7 @@
 		padding: 0 1em;
 		text-decoration: none;
 		width: 100%;
+		font-size: 1.2em;
 	}
 
 		input[type="text"]:invalid,

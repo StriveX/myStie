@@ -29,7 +29,7 @@
 			});
 
 		// Touch mode.
-			//if (skel.vars.mobile)
+			if (skel.vars.mobile)
 				$body.addClass('is-touch');
 
 		// Fix: Placeholder polyfill.
@@ -45,7 +45,7 @@
 
 		// Scrolly links.
 			$('.scrolly').scrolly({
-				speed: 700
+				speed: 2000
 			});
 
 		// Dropdowns.
@@ -139,12 +139,10 @@
 
 						skel.on('change', function() {
 
-							/*if (skel.breakpoint('medium').active)
+							if (skel.breakpoint('medium').active)
 								(off)();
 							else
-								(on)();*/
-
-							(off)();
+								(on)();
 
 						});
 
@@ -215,7 +213,7 @@
 
 										// Uncomment the line below to "rewind" when this spotlight scrolls out of view.
 
-										leave:	function(t) { $this.addClass('inactive'); },
+										//leave:	function(t) { $this.addClass('inactive'); },
 
 									});
 
@@ -226,7 +224,7 @@
 					off = function() {
 
 						// Clear spotlight's background.
-							//$this.css('background-image', '');
+							$this.css('background-image', '');
 
 						// Disable transitions (if supported).
 							if (skel.canUse('transition')) {
@@ -271,7 +269,7 @@
 
 								// Uncomment the line below to "rewind" when this wrapper scrolls out of view.
 
-								leave:	function(t) { $this.addClass('inactive'); },
+								//leave:	function(t) { $this.addClass('inactive'); },
 
 							});
 
@@ -292,8 +290,6 @@
 							(off)();
 						else
 							(on)();
-
-
 
 					});
 

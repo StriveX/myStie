@@ -24,8 +24,8 @@ exports.submit = function(req, res, next) {
 exports.logout = function(req, res) {
 	req.session.destroy(function(err){
 		if (err) throw err;
-		var redirect_to = req.session.redirect_to ? req.session.redirect_to : '/';
+/*		var redirect_to = req.session.redirect_to ? req.session.redirect_to : '/';
 		delete req.session.redirect_to;
-		res.redirect(redirect_to);
+		res.redirect(redirect_to);*/
 	})
 };

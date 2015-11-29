@@ -6,8 +6,8 @@
 							<li>
 								<a href="#">Layouts</a>
 								<ul>
-									<li><a href="left-sidebar.html">Left Sidebar</a></li>
-									<li><a href="right-sidebar.html">Right Sidebar</a></li>
+									<li><a href="left-sidebar.html">About me</a></li>
+									<li><a href="/blog">Blog</a></li>
 									<li><a href="no-sidebar.html">No Sidebar</a></li>
 									<li>
 										<a href="#">Submenu</a>
@@ -30,7 +30,11 @@
 								</ul>
 							</li>
 					    <% } else { %>
-							<li><a href="/login" class="button special">Log In</a></li>
+					    	<% if (typeof status === 'undefined') { %>
+								<li><a href="/login" class="button special">Log In</a></li>
+					    	<% } else if (status == 'login') { %>
+								<li><a href="/login" class="button special">Sign Up</a></li>
+							<% } %>
 						<% } %>
 						</ul>
 					</nav>

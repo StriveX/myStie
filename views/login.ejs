@@ -15,44 +15,41 @@
 		<div id="page-wrapper">
 
 			<!-- Header -->
+				<% var status = 'login' %>
 				<% include menu %>
 
-			<!-- Main -->
-				<section id="main" class="container 25%">
-					<header>
-						<h2>Log In</h2>
-					</header>
-					<div class="box">
-						<form method="post" action="/login" onsubmit="return checkForm()">
-							<div class="row uniform 50%">
-								<div class="12u">
-									<input type="text" name="user[name]" id="name" value="" placeholder="Name" />
-								</div>
+				<div id="main" class="wrapper style1">
+					<div class="container">
+						<header class="major">
+							<h2>Log In</h2>
+						</header>
+					<!-- Table -->
+						<section class="container 50%">
+							<div class="box">
+								<form method="post" action="/login" onsubmit="return checkForm()">
+									<div class="row uniform 50%">
+										<div class="12u">
+											<input type="text" name="user[name]" id="name" value="" placeholder="Name" />
+										</div>
+									</div>
+									<div class="row uniform 50%">
+										<div class="12u">
+											<input type="password" name="user[pass]" id="password" value="" placeholder="Password" />
+										</div>
+									</div>
+									<div class="row uniform 50%">
+										<div class="12u">
+											<ul class="actions fit">
+												<li><input type="submit" value="Log In" class="button fit special" /></li>
+												<li><a href="/register" class="button fit">Sign Up</a></li>
+											</ul>
+										</div>
+									</div>
+								</form>
 							</div>
-							<div class="row uniform 50%">
-								<div class="12u">
-									<input type="password" name="user[pass]" id="password" value="" placeholder="Password" />
-								</div>
-							</div>
-							<div class="row uniform">
-								<div class="6u 12u">
-									<ul class="actions align-center">
-										<li><input type="submit" value="Log in" /></li>
-									</ul>
-								</div>
-							</div>
-						</form>
+						</section>
 					</div>
-				</section>
-
-
-
-
-
-
-
-
-
+				</div>
 
 			<!-- Footer -->
 				<footer id="footer">

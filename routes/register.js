@@ -10,19 +10,20 @@ exports.submit = function(req, res, next) {
 	User.getByName(data.name, function(err, user){
 		if (err) return next(err);
 		if (user) {
-			res.error("Username already exists.");
+			//res.err("Username already exists.");
 			res.redirect('back');
 		} else {
 			user = new User({
 				name: data.name,
 				email: data.email,
-				pass: data.pass
+				pass: data.pass,
+				info: data.info
 			});
 			user.save(function(err) {
 				console.log("error");
 				if (err) return next(err);
 				req.session.uid = user.id;
-				res.redirect('/dataloop/');
+				res.redirect('/blog');
 			});
 		}
 	});

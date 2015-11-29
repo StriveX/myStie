@@ -41,29 +41,28 @@ app.use(session({ resave: false,
                   secret: 'uwotm8' }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(cookieParser());
+app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // middle ware HERE!
 app.use(user);
 app.use(message);
 
+
 app.get('/', function(req, res) {
   //res.sendFile(path.join(__dirname, 'public/idea'));
-  res.render('index', { title: 'Home' });
+  res.render('temp_index');
 });
 
-// app.get('/dataloop', page(entry.count, 5), entries.list);
-app.get('/dataloop/', entries.list);
-app.post('/dataloop/', entries.submit);
-
-app.get('/dataloop/register', register.form);
-app.post('/dataloop/register', register.submit);
-
+app.get('/register', register.form);
+app.post('/register', register.submit);
 app.get('/login', login.form);
 app.post('/login', login.submit);
 app.get('/logout', login.logout);
 
+// app.get('/dataloop', page(entry.count, 5), entries.list);
+app.get('/dataloop/', entries.list);
+app.post('/dataloop/', entries.submit);
 app.get('/dataloop/idea', function(req, res) {
   res.render('idea', { title: 'Idea' });
   //res.sendFile(path.join(__dirname, '/public', 'idea.html'));
