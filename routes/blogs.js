@@ -16,3 +16,11 @@ exports.list = function(req, res, next) {
     })
 };
 
+exports.submit = function(req, res, next) {
+    var data = req.body;
+    Blog.save(data, function(err) {
+        if (err) return next(err);
+    });
+    res.redirect('/blog/' + data.category);
+}
+

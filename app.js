@@ -50,8 +50,7 @@ app.use(message);
 
 
 app.get('/', function(req, res) {
-  //res.sendFile(path.join(__dirname, 'public/idea'));
-  res.render('temp_index');
+    res.render('temp_index');
 });
 
 app.get('/register', register.form);
@@ -64,8 +63,7 @@ app.get('/logout', login.logout);
 app.get('/dataloop/', entries.list);
 app.post('/dataloop/', entries.submit);
 app.get('/dataloop/idea', function(req, res) {
-  res.render('idea', { title: 'Idea' });
-  //res.sendFile(path.join(__dirname, '/public', 'idea.html'));
+    res.render('idea', { title: 'Idea' });
 });
 
 app.get('/dataloop/:name', collection.form);
@@ -76,53 +74,51 @@ app.delete('/dataloop/:name', collection.remove);
 /****** BLOG Routings. ******/
 app.get('/blog', auth.restrict, function(req, res) {res.render('public/blog');});
 app.get('/blog/:type/:page?/:perpage?', page(post.count), blog.list);
-app.get('/manage', auth.permission('onwer'), page(post.count), blog.list);
-app.post('/manage', auth.permission('onwer'), function(req, res) {res.render('manage');});
+app.get('/manage', auth.permission('onwer'), function(req, res) {
+    res.render('public/manage');
+});
+app.post('/manage', auth.restrict, auth.permission('onwer'), blog.submit);
 /****************************/
 
 
 // ERROR HANDLERS
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
+    res.render('invalid', {
+        title: 'Not Found',
+        message: 'This page does not exist.'
+    });
 
-  res.render('invalid', {
-    title: 'Not Found',
-    message: 'This page does not exist.'
-  });
-
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
 });
 
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
+    app.use(function(err, req, res, next) {
+        res.status(err.status || 500);
+        res.render('error', {
+            message: err.message,
+            error: err
+        });
+        console.log(err.message);
     });
-    console.log(err.message);
-  });
 }
 
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
-  });
-  console.log(err.message);
+    res.status(err.status || 500);
+    res.render('error', {
+        message: err.message,
+        error: {}
+    });
+    console.log(err.message);
 });
 
-// http.createServer(app).listen(app.get('port'), function() {
-//   console.log('Express server listening on port ' + app.get('port'));
-// })
 var server = http.createServer(app);
 server.listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
+    console.log('Express server listening on port ' + app.get('port'));
 });

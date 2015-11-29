@@ -22,7 +22,6 @@ exports.form = function(req, res, next) {
 
 exports.submit = function(req, res, next) {
     var data = req.body;
-    console.log("id", res.locals.user);
     var uid = 1;
     if (res.locals.user) {
         uid = res.locals.user.uid;
