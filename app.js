@@ -32,7 +32,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 app.use(logger('dev'));
 app.use(methodOverride());
@@ -72,7 +72,8 @@ app.delete('/dataloop/:name', collection.remove);
 
 /****** BLOG Routings. ******/
 app.get('/blog', auth.restrict, function(req, res) {res.render('public/blog');});
-app.get('/blog/:type/:page?/:perpage?', page(post.count), blog.list);
+app.get('/blog/post/:id', blog.post);
+app.get('/blog/:type/:page?/:fullpage?', page(5,post.count), blog.list);
 app.get('/manage', auth.permission('onwer'), function(req, res) {
     res.render('public/manage');
 });
@@ -83,6 +84,7 @@ app.post('/manage', auth.restrict, auth.permission('onwer'), blog.submit);
 // ERROR HANDLERS
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
+    console.log(req.originalUrl);
     res.render('invalid', {
         title: 'Not Found',
         message: 'This page does not exist.'
