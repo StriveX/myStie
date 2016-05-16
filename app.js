@@ -50,8 +50,17 @@ app.use(message);
 
 
 app.get('/', function(req, res) {
-    res.render('temp_index');
+    res.render('index');
 });
+app.get('/blog/:id', function(req, res) {
+    res.render('index');
+});
+app.get('/about', function(req, res) {
+    res.render('about');
+});
+
+
+
 
 app.get('/register', register.form);
 app.post('/register', register.submit);
