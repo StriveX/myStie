@@ -52,8 +52,9 @@ app.use(message);
 app.get('/', function(req, res) {
     res.render('index');
 });
-app.get('/blog/:id', function(req, res) {
-    res.render('index');
+app.get('/projects', function(req, res) {
+    console.log("HI");
+    res.render('projects');
 });
 app.get('/about', function(req, res) {
     res.render('about');
