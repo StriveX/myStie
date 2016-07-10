@@ -72,7 +72,7 @@
   					<h1 id="blog">Blog</h1>
   				</div>
   				<div class="blog-post">
-  					<h2 class="blog-post-title">Information Extraction by Table Parsing</h2>
+  					<h2 class="blog-post-title" id="info_extraction">Information Extraction by Table Parsing</h2>
   					<p class="blog-post-meta">April 29, 2016</p>
 
   					<p><a href="files/work_report_s4.pdf">Here</a> is a link to my work report regarding this topic.</p>
@@ -91,7 +91,7 @@
   						<h3>N-gram Solution</h3>
   						<p>N-gram is widely used in natural language processing, and N-gram solution is trying to understand the document content in a natural language way. It is established on two facts: information is displayed in human reading order (top-to-bottom, left-to-right) across cells, and mapping order between two cells will be conserved [Figure 1(b)].</p>
   						<p>Following these facts, N-gram solution reads a document as human reads, collects keys and values and stores them in order. Following shows the result on Figure I:</p>
-  						<blockquote><em class="example">[in-network, out-of-network, deductible, $, individual, $, family, $, individual, family]</em><em> [in-network, out-of-network, deductible, individual, family, $, $, $, $]</em></blockquote>
+  						<blockquote><em class="example">[in-network, out-of-network, deductible, $, individual, $, family, $, individual, family]</em><em  class="example"> [in-network, out-of-network, deductible, individual, family, $, $, $, $]</em></blockquote>
   						<p>In the example, even though information is displayed differently in two tables, the orders are consistent. N-gram solution screens out the noise from document templates but keeps the essence of how information is displayed.</p>
   						<p>The rest work is information extraction[2] from the previous result. Natural language processing techniques work here, such as tokenizing, chucking and tagging[3]. These require defining grammar with regular expression rule. This is similar to hardcode solution, but the content is much simplified by focusing on information itself, hence a lot of hardcoding work on processing document template is saved.</p>
   						<p>In practice, N-gram method can be used to decide which rule should apply, and eliminate unrelated keyword. (see Figure 3 as described in next section)</p>
@@ -114,9 +114,9 @@
   					<h2 class="blog-post-title">Internship at Zenefits</h2>
   					<p class="blog-post-meta">April 24, 2016</p>
 
-  					<p>For the past four months, I have been working at <a href="https://www.zenefits.com/">Zenefits</a>. This is my first time working in a startup. I've seen how engineers work like one group while everyone is responsible for individual project to keep the product forward fast. I gained the experience of development cycle from design to testing, and how to modulize code to make a program scalable and maintainable. <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">See more</a></p>
+  					<p>For the past four months, I have been working at <a href="https://www.zenefits.com/">Zenefits</a>. This is my first time working in a startup. I've seen how engineers work like one group while everyone is responsible for individual project to keep the product forward fast. I gained the experience of development cycle from design to testing, and how to modulize code to make a program scalable and maintainable. <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">See more</a></p>
   					<hr>
-  					<div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+  					<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
   						<h2>Overview</h2>
   						<p>My manager Usman Ghani, who built up infra team at Zenefits, now is working as an individual contributor in the company. Therefore, instead of dealing with business related features in the old system, I have the chance to work on the prototype of Zenefits next generation's insurance pipeline.
   						</p>
@@ -124,144 +124,167 @@
   						</p>
   						<ol>
   							<li>First, clients search for insurance plan with <a href="#search_system">Plan Search System</a></li>
+  							<li>If insurance plan was found, stop and go to next process.</li>
+  							<li>If insurance plan was NOT found, ask the client/insurance company to provide more insurance plan documents. The information from new plan need to be updated into our system. Currently this is mannually handled by our employee, but we could automate this process by program</li>
   						</ol>
-  						<p>Everything was built up inside one big system before. As the system growth, the increasing code base brings lots of difficulties on further development including testing and deploying. The next move is to shift the product into individual micro-service: every system is isolated from each other, running on its own instance and communicating with each other via internal API.
+  						<h2>Internal API</h2>
+  						<p>Everything was built up inside one big system before. As the system growth, the increasing code base brings lots of difficulties on further development including testing and deploying. The next move is to shift the product into individual micro-service: every system is isolated from each other, running on its own instance and communicating with each other via internal API. So the first job I did is implementing such API for our plan management pipeline system, using Flask and nothing fancy.
   						</p>
   						<h2 id="search_system">Plan Search System</h2>
-  						<p>When a complex query is executed in database, data from multiple tables could be accessed, filtered and joined in different orders. The processing time for these choices of order varies widely based on execution cost. The goal of optimizer is to choose the best plan from the these choices.</p>
-  						<p>Information is mostly presented in a table (There are exceptions such as legal articles, which are out of my focus), and it could be generalized as a key-value pair [key, value] that shows what this information is and how it is. This simplify the problem. However, since these documents are created by insurance company, the document could be in various templates. Therefore, the parse shoudl be able to idealy handle all templates.</p>
-  						<p>The documents are given in pdf format, and there are several ways to convert them into program readable format (html, csv, Excel, etc), including pdf-miner, Adobe Acrobat, while keeping the table relationship between cells.</p>
-
-  						<h2>Table Parse Internal API</h2>
-  						<h3>Hardcode Solution</h3>
-  						<p>As a fast-growing company, Zenefits needs at least something working ASAP. Hardcode solution was firstly implemented. It is easy to understand and straightforward to be implemented, but the implementation involves defining lots of rules that decide how the table should be parsed, for EACH templates. There are possibly infinite templates and defining rules for each of them could be frustrating.</p>
-
+  						<p>As mentioned above, plan search is the first step in the plan management pipeline. Front-end was built up by <a href="http://emberjs.com">Ember.js</a>. Back-end was built up with Django in Python. The important part of searching is handled by <a href="https://www.elastic.co/products/elasticsearch">Elasticsearch</a>. Elasticsearch provides easy-use API for create mappings, indexing data and searching, and also has a few powerful facilities like auto complete and search suggestion. To make the code maintainable, I also implemented a backfill function that could easily load data from our database and index them in batches.</p>
+  						<img class="featurette-image img-responsive center-block" src="/images/plan_search.png" alt="Generic placeholder image">
   						<h3><b>Table Parse and Information Extraction</b></h3>
-  						<p>This is the primary project I was working on</p>
+  						<p>This is the primary project I was working on. For more details please see <a href="#info_extraction">next post</a>.</p>
   					</div>
   				</div>
   				<div class="blog-post">
   					<h2 class="blog-post-title">Find Correlated Columns in Databases</h2>
   					<p class="blog-post-meta">April 13, 2015</p>
 
-  					<p>This is the main project I have been working on at IBM DB2 compiler team. The goal is to detect any correlated columns within a table or across tables within a database. Given some basic information (stored in database catalog)of each columns, some statistics method (mainly Chi-square test) will give evidence how likely two columns are correlated. <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">See more</a></p>
+  					<p>This is the main project I have been working on at IBM DB2 compiler team. The goal is to detect any correlated columns within a table or across tables within a database. Given some basic information (stored in database catalog)of each columns, some statistics method (mainly Chi-square test) will give evidence how likely two columns are correlated. <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">See more</a></p>
   					<hr>
-  					<div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+  					<div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
   						<h2>Introduction</h2>
-  						<p>When a complex query is executed in database, data from multiple tables could be accessed, filtered and joined in different orders. The processing time for these choices of order varies widely based on execution cost. The goal of optimizer is to choose the best plan from the these choices.</p>
-  					</div>
-  				</div>
-  			</div>
-
-  			<div class="col-md-4">
-  				<div class="panel panel-default">
-  					<div class="panel-heading"><strong>Current Status </strong><small>Update on May 13th, 2016</small>
-  					</div>
-  					<div class="panel-body">
-  						<ul>
-  							<li>Currently in my 4B term. Courses taking:
-  								<ul>
-  									<li>Networking</li>
-  									<li>Distributed System</li>
-  									<li>Artificial Intelligence</li>
-  									<li>Sampling and Experimental Design (Statistics)</li>
-  									<li>Forecasting (Statistics)</li>
-  								</ul>
-  							</li>
-  							<li>Undergraduate research assistant with professor <a href="https://cs.uwaterloo.ca/~ssalihog/">Semih Salihoglu</a>. Working on distributed database (SparkSQL) algorigthms on graph data.
-  								<ul>
-  									<li>The goal is to find triangle and connected cliques in a graph by self-join on the table. Currently, we want to find the run time and intermediate size of these joins.</li>
-  								</ul>
-  							</li>
-  							<li>Looking for my next Coop job (my last one)
-  							</li>
-  						</ul>
-  					</div>
-  				</div>
-  			</div>
-  		</div>
-
-  		<div class="row">
-  			<div class="page-header">
-  				<h2>Projects <a href="/projects"><small>view details &raquo;</small></a></h2>
-  			</div>
-  			<div class="col-md-4">
-  				<h2>Double Tetris</h2>
-  				<p>A Tetris game build on iOS. Allow two players connect with each other via bluetooth or Game Center for two-perpson game. Two players play the game on same fields, and fight for one next shape. The faster player will obtain more shapes, so more score. </p>
-  			</div>
-  			<div class="col-md-4">
-  				<h2>DataLoop</h2>
-  				<p>Users could create their own data set on certain topic with customized data fields. When the data become large, analysis with machine learning method on the data will give interesting found. Users could also participate in other people's data sets and contribute their own data. This will also help users find friends having similar situation as themselves.</p>
-  			</div>
-  			<div class="col-md-4">
-  				<h2>Traveling</h2>
-  				<p>Travellers will hit on or hear of some attractive places across the world during their life. This app helps them bookmark these places, and create a plan. During the trip, travellers take pictures or write stories on this app. The trip information, like the route, cost, schedule, will be collected and give suggestions for future travellers.</p>
-  			</div>
-  		</div>
-  	</div> <!-- /container -->
-  	<footer class="footer-distributed">
-  		<div class="footer-right">
-  			<a href="https://www.facebook.com/xi.zhu.92"><i class="fa fa-facebook"></i></a>
-  			<a href="#"><i class="fa fa-twitter"></i></a>
-  			<a href="https://ca.linkedin.com/in/xi-zhu-4b1a5797"><i class="fa fa-linkedin"></i></a>
-  			<a href="https://github.com/StriveX"><i class="fa fa-github"></i></a>
-  		</div>
-  		<div class="footer-left">
-  			<p class="footer-links">
-  				<a href="/">Home</a>·
-  				<a href="/#blog">Blog</a>·
-  				<a href="/about">About</a>
-  			</p>
-  			<p>Xi Zhu; Last updated on March 2016</p>
-  		</div>
-  	</footer>
-
-
-  	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  		<div class="modal-dialog" role="document">
-  			<div class="modal-content">
-  				<div class="modal-header">
-  					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  					<h4 class="modal-title" id="myModalLabel">Modal title</h4>
-  				</div>
-  				<div class="modal-body">
-  					<div class="col-md-6">
-  						<p>Mr. Zhu was born in Febrary, 1993 and spent his childhood in Jinan, China. 
-  							He has a natural interest in fine art and math, and also enjoys travelling since young. 
-  							After graduating from high school, he came to Canada to have his undergraduate education at University of Waterloo. <br />
-  							He intended to take major in mathematical finance in his first year. Until he got the chance to write real </p>
+  						<p>When a complex query is executed in database, data from multiple tables could be accessed, filtered and joined in different orders. The processing time for these choices of order varies widely based on execution cost. The goal of optimizer is to choose the best plan from the these choices. Optimizer considers several factors that affect the cost. One of these factors is the cost of every individual operators in the plan. To evaluate the cost of each individual operator, optimizer relies on the properties of the operator and the volume of data processed by this operator. The volume of data includes the size of output and size of input.</p>
+  						<p>To estimate the number of output rows, predicates (constraints applied on query) act as filters on output results from operators and eliminate the rows not required in subsequent operators. In case of multiple predicates, each has its own filter factor which can be used to derive intermediate results for subsequent operators. Optimizer estimates the cardinality starting from the base table cardinality, multiplied by the filter factor corresponding to each predicate in the operator. In case of multiple predicates, each has its own filter factor which can be used to derive intermediate results for subsequent operators. Optimizer estimates the cardinality starting from the base table cardinality, multiplied by the filter factor corresponding to each predicate in the operator.</p>
+  						<h2>Effect of Data Distribution in Estimation</h2>
+  						<h3>Data Uniformity Assumption</h3>
+  						<p>When calculating the filter factor for a predicate, optimizer assumes the columns that are involved within a query have uniform distribution. Under uniform distribution, optimizer regards each value the same amount. For example, column CITY includes three distinct values (column cardinality is 3). Filter factor for an equality predicate, [CITY=‘Waterloo’], is calculated by 1/ [column cardinality] = 1/3. That is, optimizer estimates that there should be 6*(1/3) = 2 rows returned after applying this predicate, whereas in reality 4 rows are returned. Data stored in real-world database is rarely uniform. Instead, some values in a column appear more frequently than others. When these frequent values are used in a predicate, they deserve more weight in filter factors than others.</p>
+  						<h3>Improvement on Data Distribution</h3>
+  						<p>Frequent value statistics are collected to reflect the data skewness within a column. From frequent value statistics on columns, optimizer can have a better understanding of the data distribution in the table. Consequently, this information can be used to provide better estimation. In previous example, frequent value statistics should be collected on CITY. Knowing that ‘Waterloo’ has a frequency of 4, optimizer will evaluate the filter factor of predicate [CITY=‘Waterloo’] by</p>
+  						<blockquote><em class="example">ff(city=Waterloo) = frequency(Waterloo) / table cardinality = 4/6 = 2/3</em></blockquote>
+  						<h2>Effect of Column Correlations in Estimation</h2>
+  						<h3>Predicate Independence Assumption</h3>
+  						<p>When applying multiple predicates in one query, an optimizer assumes these predicates are independent from each other and hence filter factors are multiplied together to estimate the output cardinality. However, when those columns corresponding to these predicates are statistically correlated in some way and used in same query, this assumption is violated and the resulting filter factor can lead to underestimation.
+  							<p>For example, city Vancouver implies state British Columbia (they are statistically correlated with correlation = 1 but the optimizer does not know this). Hence, the optimizer will estimate the filter factor as</p>
+  							<blockquote><em class="example">ff(BC&Vancouver) = ff(BC) * ff(Vancouver) = (1/6) * (1/6) = 1/36</em></blockquote>
+  							<p>The final filter factor is underestimated since it applies a factor (ff(BC)) that does not filter results at all.</p>
+  							<h3>Column Group Statistics</h3>
+  							<p>Column group statistics are generally created on a group of columns in the same table. Column group statistics include column distribution statistics, providing the optimizer with the column group cardinality, the number of distinct value in the group and statistical correlation among the columns. The optimizer is now able to detect statistical correlation among these columns and create adjustments. This helps optimizer estimate the combined filter factor of multiple predicates on correlated columns more accurately.</p>
+  							<p>For example, by creating column group statistics on (State, City), the filter factor for predicate is calculated from column group cardinality directly:</p>
+  							<blockquote><em class="example">ff(BC&Vancouver) = 1 / [column group cardinality] = 1/3</em></blockquote>
+  							<p>This still differs from actual filter factor 1/6, but it significantly reduces the error from the previous. When the columns in a column group are involved in a query, optimizer uses their column group statistics directly, instead of calculating the selectivity by multiplying each column cardinality together.</p>
+  							<h3>Statistical View</h3>
+  							<p>Same statistics collected on regular tables can also be collected on statistical views. It extends the idea of column group statistics in one table into more complex situations, such as joins between multiple tables or selects from sub-query blocks. Same statistics collected on regular tables can also be collected on statistical views. It extends the idea of column group statistics in one table into more complex situations, such as joins between multiple tables or selects from sub-query blocks.</p>
+  							<p>Statistical views can be utilized in many cases. Optimizer can make use of column group statistics on statistical view to help with cardinality estimation. Estimating the selectivity of a predicate involving complex expression is usually hard using base table statistics. (Ilyas, Zuzarte, 2009) The underlying concept of statistical view is similar to column group statistics: create a new object (column group or statistical view) to cover the complex sub-query where assumptions may be violated, and collect statistics directly on this new object. These statistics are used to better estimate the output properties and columns statistics for subsequent operators in the plan.</p>
+  							<h2>Reference</h2>
+  							<p>[1] Wikipedia. Query Optimization. Retrieved 14 December, 2014 from https://en.wikipedia.org/w/index.php?title=Query_optimization&gettingStartedReturn=true</p>
+  							<p>[2] Ramakrishnan, Raghu. Database Management Systems. Boston, Mass.: WCB/McGraw-Hill, 1998. Print.</p>
+  							<p>[3] El-Helw, Amr, Ihab F. Ilyas, and Calisto Zuzarte. "StatAdvisor: recommending statistical views." Proceedings of the VLDB Endowment 2.2 (2009): 1306-1317.</p>
+  							<p>[4] Kapoor Samir, and Vincent Corvinelli. "Understand Column Group Statistics in DB2." DeveloperWorks. 21 Dec. 2006. Web. 15 Dec. 2014.</p>
   						</div>
+  					</div>
+  				</div>
+
+  				<div class="col-md-4">
+  					<div class="panel panel-default">
+  						<div class="panel-heading"><strong>Current Status </strong><small>Update on May 13th, 2016</small>
+  						</div>
+  						<div class="panel-body">
+  							<ul>
+  								<li>Currently in my 4B term. Courses taking:
+  									<ul>
+  										<li>Networking</li>
+  										<li>Distributed System</li>
+  										<li>Artificial Intelligence</li>
+  										<li>Sampling and Experimental Design (Statistics)</li>
+  										<li>Forecasting (Statistics)</li>
+  									</ul>
+  								</li>
+  								<li>Undergraduate research assistant with professor <a href="https://cs.uwaterloo.ca/~ssalihog/">Semih Salihoglu</a>. Working on distributed database (SparkSQL) algorigthms on graph data.
+  									<ul>
+  										<li>The goal is to find triangle and connected cliques in a graph by self-join on the table. Currently, we want to find the run time and intermediate size of these joins.</li>
+  									</ul>
+  								</li>
+  								<li>Looking for my next Coop job (my last one)
+  								</li>
+  							</ul>
+  						</div>
+  					</div>
+  				</div>
+  			</div>
+
+  			<div class="row">
+  				<div class="page-header">
+  					<h2>Projects <a href="/projects"><small>view details &raquo;</small></a></h2>
+  				</div>
+  				<div class="col-md-4">
+  					<h2>Double Tetris</h2>
+  					<p>A Tetris game build on iOS. Allow two players connect with each other via bluetooth or Game Center for two-perpson game. Two players play the game on same fields, and fight for one next shape. The faster player will obtain more shapes, so more score. </p>
+  				</div>
+  				<div class="col-md-4">
+  					<h2>DataLoop</h2>
+  					<p>Users could create their own data set on certain topic with customized data fields. When the data become large, analysis with machine learning method on the data will give interesting found. Users could also participate in other people's data sets and contribute their own data. This will also help users find friends having similar situation as themselves.</p>
+  				</div>
+  				<div class="col-md-4">
+  					<h2>Traveling</h2>
+  					<p>Travellers will hit on or hear of some attractive places across the world during their life. This app helps them bookmark these places, and create a plan. During the trip, travellers take pictures or write stories on this app. The trip information, like the route, cost, schedule, will be collected and give suggestions for future travellers.</p>
+  				</div>
+  			</div>
+  		</div> <!-- /container -->
+  		<footer class="footer-distributed">
+  			<div class="footer-right">
+  				<a href="https://www.facebook.com/xi.zhu.92"><i class="fa fa-facebook"></i></a>
+  				<a href="#"><i class="fa fa-twitter"></i></a>
+  				<a href="https://ca.linkedin.com/in/xi-zhu-4b1a5797"><i class="fa fa-linkedin"></i></a>
+  				<a href="https://github.com/StriveX"><i class="fa fa-github"></i></a>
+  			</div>
+  			<div class="footer-left">
+  				<p class="footer-links">
+  					<a href="/">Home</a>·
+  					<a href="/#blog">Blog</a>·
+  					<a href="/about">About</a>
+  				</p>
+  				<p>Xi Zhu; Last updated on March 2016</p>
+  			</div>
+  		</footer>
+
+
+  		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  			<div class="modal-dialog" role="document">
+  				<div class="modal-content">
+  					<div class="modal-header">
+  						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  						<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+  					</div>
+  					<div class="modal-body">
   						<div class="col-md-6">
-  							<p>programs when he was Co-op at AIG, he found the enjoyment of programming and finally understood what is his true love. <br />
-  								Today, Mr. Zhu eagerly is gulping down knowledge with unmatched enthusiasm. 
-  								As a CS student who interests also in statistics and optimization, he is aiming at data analysis studying. Hopefully, he could make his contribution to this world.</p>
+  							<p>Mr. Zhu was born in Febrary, 1993 and spent his childhood in Jinan, China. 
+  								He has a natural interest in fine art and math, and also enjoys travelling since young. 
+  								After graduating from high school, he came to Canada to have his undergraduate education at University of Waterloo. <br />
+  								He intended to take major in mathematical finance in his first year. Until he got the chance to write real </p>
+  							</div>
+  							<div class="col-md-6">
+  								<p>programs when he was Co-op at AIG, he found the enjoyment of programming and finally understood what is his true love. <br />
+  									Today, Mr. Zhu eagerly is gulping down knowledge with unmatched enthusiasm. 
+  									As a CS student who interests also in statistics and optimization, he is aiming at data analysis studying. Hopefully, he could make his contribution to this world.</p>
+  								</div>
+  							</div>
+  							<div class="modal-footer">
+  								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+  								<button type="button" class="btn btn-primary">Save changes</button>
   							</div>
   						</div>
-  						<div class="modal-footer">
-  							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-  							<button type="button" class="btn btn-primary">Save changes</button>
-  						</div>
   					</div>
   				</div>
   			</div>
   		</div>
-  	</div>
 
-  	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  	<!-- // <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script> -->
-  	<script src="javascripts/bootstrap.min.js"></script>
-  	<script type="text/javascript">
-  	$("[data-toggle=popover]").popover();
-  	var jumboHeight = $('.jumbotron').outerHeight();
-  	function parallax(){
-  		var scrolled = $(window).scrollTop();
-  		$('.bg').css('height', (jumboHeight-scrolled) + 'px');
-  	}
+  		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  		<!-- // <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script> -->
+  		<script src="javascripts/bootstrap.min.js"></script>
+  		<script type="text/javascript">
+  		$("[data-toggle=popover]").popover();
+  		var jumboHeight = $('.jumbotron').outerHeight();
+  		function parallax(){
+  			var scrolled = $(window).scrollTop();
+  			$('.bg').css('height', (jumboHeight-scrolled) + 'px');
+  		}
 
-  	$(window).scroll(function(e){
-  		parallax();
-  	});
-  	</script>
-  </body>
-  </html>
+  		$(window).scroll(function(e){
+  			parallax();
+  		});
+  		</script>
+  	</body>
+  	</html>
