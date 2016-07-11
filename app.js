@@ -8,26 +8,23 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var methodOverride = require('method-override');
 
-/***** Middle ware *****/
+/*************** Middlewares ***************/
 var user = require('./lib/middleware/user');
 var page = require('./lib/middleware/page');
 var auth = require('./lib/middleware/auth');
-
+/*************** Objects ***************/
 var message = require('./lib/messages');
-var entry = require('./lib/entry');
-var post = require('./lib/blog/post');
-
+var post = require('./lib/post');
+/*************** Routes ***************/
 var register = require('./routes/register');
 var login = require('./routes/login');
 var entries = require('./routes/entries');
 var collection = require('./routes/collections');
-
 var blog = require('./routes/blogs');
 
 var app = express();
 
 app.set('port', process.env.PORT || 3000);
-// view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -52,13 +49,28 @@ app.use(message);
 app.get('/', function(req, res) {
     res.render('index');
 });
-app.get('/projects', function(req, res) {
-    console.log("HI");
+app.get('/home', function(req, res) {
+    res.render('home');
+});
+
+app.get('/home/blog', blog.list);
+app.get('/home/blog/:id', blog.post);
+
+app.get('/home/status', function(req, res) {
+    res.render('about');
+});
+app.get('/home/projects', function(req, res) {
     res.render('projects');
 });
+
 app.get('/about', function(req, res) {
     res.render('about');
 });
+// app.get('/admin', function(req, res) {
+//     res.render('about');
+// });
+
+
 
 
 
@@ -83,7 +95,7 @@ app.delete('/dataloop/:name', collection.remove);
 /****** BLOG Routings. ******/
 app.get('/blog', auth.restrict, function(req, res) {res.render('public/blog');});
 app.get('/blog/post/:id', blog.post);
-app.get('/blog/:type/:page?/:fullpage?', page(5,post.count), blog.list);
+app.get('/blog/:type/:page?/', page(5, post.count), blog.list);
 app.get('/manage', auth.permission('onwer'), function(req, res) {
     res.render('public/manage');
 });
