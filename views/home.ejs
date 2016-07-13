@@ -71,6 +71,9 @@
   				<div class="page-header">
   					<h1 id="blog">Blog</h1>
   				</div>
+                <div id="blog_block">
+
+                </div>
   			</div>
 
 			<div class="col-md-4">
@@ -93,7 +96,7 @@
 									<li>The goal is to find triangle and connected cliques in a graph by self-join on the table. Currently, we want to find the run time and intermediate size of these joins.</li>
 								</ul>
 							</li>
-							<li>Looking for my next Coop job (my last one)
+							<li>Work at Drvie.ai next term (Sept-Dec)
 							</li>
 						</ul>
 					</div>
@@ -119,7 +122,7 @@
 			</div>
 		</div>
 	</div> <!-- /container -->
-        
+
 	<footer class="footer-distributed">
 		<div class="footer-right">
 			<a href="https://www.facebook.com/xi.zhu.92"><i class="fa fa-facebook"></i></a>
@@ -172,6 +175,7 @@
   		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   		<!-- // <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script> -->
   		<script src="javascripts/bootstrap.min.js"></script>
+		<script src="javascripts/home_blog.js"></script>
   		<script type="text/javascript">
   		$("[data-toggle=popover]").popover();
   		var jumboHeight = $('.jumbotron').outerHeight();
@@ -179,6 +183,10 @@
   			var scrolled = $(window).scrollTop();
   			$('.bg').css('height', (jumboHeight-scrolled) + 'px');
   		}
+
+        $(document).ready(function() {
+            loadBlogs("home/blog/1");
+        });
 
   		$(window).scroll(function(e){
   			parallax();

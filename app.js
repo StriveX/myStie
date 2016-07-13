@@ -18,8 +18,6 @@ var post = require('./lib/post');
 /*************** Routes ***************/
 var register = require('./routes/register');
 var login = require('./routes/login');
-var entries = require('./routes/entries');
-var collection = require('./routes/collections');
 var blog = require('./routes/blogs');
 
 var app = express();
@@ -53,8 +51,8 @@ app.get('/home', function(req, res) {
     res.render('home');
 });
 
-app.get('/home/blog', blog.list);
-app.get('/home/blog/:id', blog.post);
+app.get('/home/blog/:page?', page(5, post.count), blog.list);
+app.get('/home/blog/post/:id', blog.post);
 
 app.get('/home/status', function(req, res) {
     res.render('about');
@@ -70,8 +68,8 @@ app.get('/about', function(req, res) {
 //     res.render('about');
 // });
 
-
-
+app.get('/admin/blog/:id?', blog.form);
+app.post('/admin/blog/:id?', blog.submit);
 
 
 
@@ -81,16 +79,6 @@ app.get('/login', login.form);
 app.post('/login', login.submit);
 app.get('/logout', login.logout);
 
-// app.get('/dataloop', page(entry.count, 5), entries.list);
-app.get('/dataloop/', entries.list);
-app.post('/dataloop/', entries.submit);
-app.get('/dataloop/idea', function(req, res) {
-    res.render('idea', { title: 'Idea' });
-});
-
-app.get('/dataloop/:name', collection.form);
-app.post('/dataloop/:name', collection.submit);
-app.delete('/dataloop/:name', collection.remove);
 
 /****** BLOG Routings. ******/
 app.get('/blog', auth.restrict, function(req, res) {res.render('public/blog');});
