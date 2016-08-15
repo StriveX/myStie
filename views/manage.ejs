@@ -6,41 +6,38 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 	<meta name="description" content="">
-	<meta name="author" content="Xi Zhu">
-	<link rel="icon" href="/favicon.ico">
+	<meta name="author" content="">
+	<link rel="icon" href="favicon.ico">
 
 	<title>Xi Zhu's Website</title>
 
 	<!-- Bootstrap core CSS -->
 	<link href="/css/bootstrap.min.css" rel="stylesheet">
-	<!-- AwesomeFont core CSS -->
-	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
-	<!-- Custom styles for this template -->
-	<link href="/assets/css/home.css" rel="stylesheet">
 	<link href="/css/general.css" rel="stylesheet">
 
-	<!-- jQuery core script -->
+	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+	<!-- <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet"> -->
+
+	<!-- Custom styles for this template -->
+	<link href="assets/css/home.css" rel="stylesheet">
+
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<!-- ckEditor core script -->
-	<script src="/javascripts/ckeditor/ckeditor.js"></script>
+	<script src="javascripts/bootstrap.min.js"></script>
+	<script src="javascripts/login.js"></script>
+
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 </head>
 
 <body>
 
 <% include menu %>
 
-<div class="bg"></div>
-
-<div class="jumbotron">
-	<div class="container">
-		<h1>Xi Zhu</h1>
-		<p>A humble programmer with big dream.</p>
-		<p><a class="btn btn-primary" href="files/resume.pdf" role="button">Resume</a></p>
-	</div>
-</div>
-
-<div class="container marketing">
-	<!-- Example row of columns -->
+<div class="container no-jumbotron">
 
 	<div class="row">
 		<div class="col-md-8">
@@ -53,29 +50,10 @@
 		</div>
 
 		<div class="col-md-4">
-			<div class="panel panel-default">
-				<div class="panel-heading"><strong>Current Status </strong><small>Update on May 13th, 2016</small>
-				</div>
-				<div class="panel-body">
-					<ul>
-						<li>Currently in my 4B term. Courses taking:
-							<ul>
-								<li>Networking</li>
-								<li>Distributed System</li>
-								<li>Artificial Intelligence</li>
-								<li>Sampling and Experimental Design (Statistics)</li>
-								<li>Forecasting (Statistics)</li>
-							</ul>
-						</li>
-						<li>Undergraduate research assistant with professor <a href="https://cs.uwaterloo.ca/~ssalihog/">Semih Salihoglu</a>. Working on distributed database (SparkSQL) algorigthms on graph data.
-							<ul>
-								<li>The goal is to find triangle and connected cliques in a graph by self-join on the table. Currently, we want to find the run time and intermediate size of these joins.</li>
-							</ul>
-						</li>
-						<li>Work at Drvie.ai next term (Sept-Dec)
-						</li>
-					</ul>
-				</div>
+			<div class="btn-group-vertical" role="group" aria-label="...">
+				<button type="button" class="btn btn-default" href="/admin/blog">New blog</button>
+				<button type="button" class="btn btn-default">Middle</button>
+				<button type="button" class="btn btn-default">Right</button>
 			</div>
 		</div>
 	</div>
@@ -147,7 +125,6 @@
 
 
 <script src="/javascripts/bootstrap.min.js"></script>
-<script src="javascripts/home_blog.js"></script>
 <script type="text/javascript">
 	$("[data-toggle=popover]").popover();
 	var jumboHeight = $('.jumbotron').outerHeight();
@@ -157,10 +134,6 @@
 	}
 	$(window).scroll(function(e){
 		parallax();
-	});
-
-	$(document).ready(function() {
-		loadBlogs("home/blog/1");
 	});
 </script>
 </body>

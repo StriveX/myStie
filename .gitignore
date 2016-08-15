@@ -1,6 +1,6 @@
 lib/connDB.js
 .idea/
 _ckeditor/
-
+node_modules/
 
 public/javascripts/

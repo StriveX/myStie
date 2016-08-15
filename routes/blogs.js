@@ -12,7 +12,30 @@ exports.post = function(req, res, next) {
             content: post.post
         });
     })
-}
+};
+
+
+
+exports.preview = function(req, res, next) {
+    Post.getByRange(0, 3, "blog", function(err, posts){
+        if (err) return next(err);
+        res.render('home', {
+            posts: posts,
+        });
+    })
+};
+
+exports.pageview = function(req, res, next) {
+    var page = req.page;
+    Post.getByRange(page.number, page.perpage, "blog", function(err, posts){
+        if (err) return next(err);
+        res.render('public/blog', {
+            posts: posts,
+            page: page.number,
+            pages: page.count
+        });
+    })
+};
 
 /* Get list of posts*/
 exports.list = function(req, res, next) {

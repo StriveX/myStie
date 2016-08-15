@@ -1,99 +1,61 @@
-<!DOCTYPE HTML>
-<!--
-	Alpha by HTML5 UP
-	html5up.net | @n33co
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-	<head>
-		<title>Log In</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="stylesheet" href="/assets/css/main.css" />
-	</head>
-	<body>
-		<div id="page-wrapper">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<h4 class="modal-title"><span class="login-register-title">Login</span><span class="login-register-title" style="display: none">Register</span></h4>
+	</div>
+	<div class="modal-body login-register-form">
+		<form method="post" action="/login" id="login-form">
+			<div class="form-group">
+				<label for="name">Name</label>
+				<input type="text" class="form-control" id="name" name="user[name]" placeholder="Name">
+			</div>
+			<div class="form-group">
+				<label for="password">Password</label>
+				<input type="password" class="form-control" id="password" name="user[pass]" placeholder="Password">
+			</div>
+			<button type="submit" class="btn btn-default" id="login-submit">Login</button>
+		</form>
+	</div>
+	<div class="modal-body login-register-form" style="display: none">
+		<form method="post" action="/register" onsubmit="return checkForm()" id="register-form">
 
-			<!-- Header -->
-				<% var status = 'login' %>
-				<% include menu %>
+			<label class="radio-inline">
+				<input type="radio" name="user[type]" id="registerType1" value="employer"> Employer
+			</label>
+			<label class="radio-inline">
+				<input type="radio" name="user[type]" id="registerType2" value="friend"> Friend
+			</label>
 
-				<div id="main" class="wrapper style1">
-					<div class="container">
-						<header class="major">
-							<h2>Log In</h2>
-						</header>
-					<!-- Table -->
-						<section class="container 50%">
-							<div class="box">
-								<form method="post" action="/login" onsubmit="return checkForm()">
-									<div class="row uniform 50%">
-										<div class="12u">
-											<input type="text" name="user[name]" id="name" value="" placeholder="Name" />
-										</div>
-									</div>
-									<div class="row uniform 50%">
-										<div class="12u">
-											<input type="password" name="user[pass]" id="password" value="" placeholder="Password" />
-										</div>
-									</div>
-									<div class="row uniform 50%">
-										<div class="12u">
-											<ul class="actions fit">
-												<li><input type="submit" value="Log In" class="button fit special" /></li>
-												<li><a href="/register" class="button fit">Sign Up</a></li>
-											</ul>
-										</div>
-									</div>
-								</form>
-							</div>
-						</section>
-					</div>
+
+			<div class="form-group">
+				<label for="name">Name</label>
+				<input type="text" class="form-control" id="name" name="user[name]" placeholder="Name">
+			</div>
+			<div class="form-group">
+				<label for="exampleInputEmail1">Email address</label>
+				<input type="email" class="form-control" id="email" name="user[email]" placeholder="Email">
+			</div>
+			<div class="form-group">
+				<label for="password">Password</label>
+				<input type="password" class="form-control" id="password" name="user[pass]" placeholder="Password">
+			</div>
+
+
+			<div id="employerField">
+				<div class="form-group">
+					<label for="name">Organization Name</label>
+					<input type="text" class="form-control" id="name" name="user[orgname]" placeholder="Organization Name">
 				</div>
+				<div class="form-group">
+					<label for="name">Website</label>
+					<input type="text" class="form-control" id="name" name="user[website]" placeholder="Website">
+				</div>
+			</div>
 
-			<!-- Footer -->
-				<footer id="footer">
-					<ul class="icons">
-						<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-						<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-						<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
-						<li><a href="#" class="icon fa-github"><span class="label">Github</span></a></li>
-						<li><a href="#" class="icon fa-dribbble"><span class="label">Dribbble</span></a></li>
-						<li><a href="#" class="icon fa-google-plus"><span class="label">Google+</span></a></li>
-					</ul>
-					<ul class="copyright">
-						<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-					</ul>
-				</footer>
+			<button type="submit" class="btn btn-default">Submit</button>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-default" id="login-register-toggle"><span class="login-register-title">Register</span><span class="login-register-title" style="display: none">Login</span></button>
+	</div>
 
-		</div>
-
-		<!-- Scripts -->
-			<script src="/assets/js/jquery.min.js"></script>
-			<script src="/assets/js/jquery.scrolly.min.js"></script>
-			<script src="/assets/js/jquery.dropotron.min.js"></script>
-			<script src="/assets/js/jquery.scrollex.min.js"></script>
-			<script src="/assets/js/skel.min.js"></script>
-			<script src="/assets/js/util.js"></script>
-			<script src="/assets/js/main.js"></script>
-			<script>
-			    function checkForm() {
-			    	var ok = true;
-
-			    	var name = document.getElementById("name");
-			    	if (name.value == "") {
-			    		name.style.borderColor = "#E34234";
-			    		ok = false;
-			    	}
-				    var pass1 = document.getElementById("password");
-				    if (pass1.value == "") {
-			    		pass1.style.borderColor = "#E34234";
-			    		ok = false;
-			    	}
-				    return ok;
-				}
-			</script>
-
-
-	</body>
-</html>
+	<script src="/javascripts/login.js"></script>

@@ -9,14 +9,13 @@ exports.submit = function(req, res, next) {
 	User.authenticate(data.name, data.pass, function(err, user) {
 		if (err) return next(err);
 		if (user) {
-			req.session.uid = user.id;
-			req.session.group = user.group_name;
-			var redirect_to = req.session.redirect_to ? req.session.redirect_to : '/';
-			delete req.session.redirect_to;
-			res.redirect(redirect_to);
+			req.session.uid = user.user_id;
+			res.locals.user = user;
+			// req.session.utype = user.type;
+			res.status(200).render('menu');
 		} else {
 			res.error("Invalid user or password.");
-			res.redirect('back');
+			res.status(500).json({result: 'failed'});
 		}
 	});
 };
@@ -24,8 +23,6 @@ exports.submit = function(req, res, next) {
 exports.logout = function(req, res) {
 	req.session.destroy(function(err){
 		if (err) throw err;
-/*		var redirect_to = req.session.redirect_to ? req.session.redirect_to : '/';
-		delete req.session.redirect_to;
-		res.redirect(redirect_to);*/
+		res.redirect('/home');
 	})
 };

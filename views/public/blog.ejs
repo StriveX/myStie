@@ -1,4 +1,11 @@
-			<% for(var i=0; i<posts.length; i++) { %>
+		<% if (posts.length == 0) { %>
+			<div class="panel panel-default">
+				<div class="panel-body">
+					Sorry, my blog is not working.
+				</div>
+			</div>
+		<% } else { %>
+		<% for(var i=0; i<posts.length; i++) { %>
 				<div class="blog-post">
   					<h2 class="blog-post-title" id="info_extraction"><%= posts[i].post_title %></h2>
   					<p class="blog-post-meta"><%= posts[i].post_date %></p>
@@ -12,3 +19,4 @@
   			<% if (page<pages) { %>
   				<a href="/home/blog/<%= page+1 %>">Next</a>
   			<% } %>
+		<% }%>

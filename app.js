@@ -43,10 +43,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(user);
 app.use(message);
 
-
+// depreciate
 app.get('/', function(req, res) {
     res.render('index');
 });
+
 app.get('/home', function(req, res) {
     res.render('home');
 });
@@ -61,19 +62,19 @@ app.get('/home/projects', function(req, res) {
     res.render('projects');
 });
 
-app.get('/about', function(req, res) {
+app.get('/about', auth.restrict, function(req, res) {
     res.render('about');
 });
-// app.get('/admin', function(req, res) {
-//     res.render('about');
-// });
+app.get('/admin', function(req, res) {
+    res.render('manage');
+});
 
-app.get('/admin/blog/:id?', blog.form);
-app.post('/admin/blog/:id?', blog.submit);
+app.get('/admin/blog/:id?', auth.permission(0), blog.form);
+app.post('/admin/blog/:id?', auth.permission(0), blog.submit);
 
 
 
-app.get('/register', register.form);
+// app.get('/register', register.form);
 app.post('/register', register.submit);
 app.get('/login', login.form);
 app.post('/login', login.submit);
@@ -84,10 +85,7 @@ app.get('/logout', login.logout);
 app.get('/blog', auth.restrict, function(req, res) {res.render('public/blog');});
 app.get('/blog/post/:id', blog.post);
 app.get('/blog/:type/:page?/', page(5, post.count), blog.list);
-app.get('/manage', auth.permission('onwer'), function(req, res) {
-    res.render('public/manage');
-});
-app.post('/manage', auth.restrict, auth.permission('onwer'), blog.submit);
+
 /****************************/
 
 
@@ -99,7 +97,6 @@ app.use(function(req, res, next) {
         title: 'Not Found',
         message: 'This page does not exist.'
     });
-
     var err = new Error('Not Found');
     err.status = 404;
     next(err);
