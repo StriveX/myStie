@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="Xi Zhu">
+    <link rel="icon" href="/favicon.ico">
+
+    <title>Xi Zhu's Website</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <!-- AwesomeFont core CSS -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    <!-- Custom styles for this template -->
+    <link href="/assets/css/home.css" rel="stylesheet">
+    <link href="/css/general.css" rel="stylesheet">
+
+    <!-- jQuery core script -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- ckEditor core script -->
+    <script src="/javascripts/ckeditor/ckeditor.js"></script>
+</head>
+
+<body>
+<% include ../menu %>
+
+<div class="container no-jumbotron">
+    <!-- Example row of columns -->
+
+    <div class="row">
+        <form method="post" action="/admin/blog">
+            <% if (isEdit ) {%>
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" class="form-control" name="title" id="title" value="<%= title %>">
+                </div>
+                <input type="text" name="id" value="<%= id %>">
+            <% }  else { %>
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" class="form-control" name="title" id="title">
+                </div>
+            <% } %>
+            <div class="form-group">
+                <textarea class="form-control" name="content" id="content" rows="10" cols="80">
+                    <% if (isEdit ) {%>
+                        <%= content %>
+                    <% } %>
+                </textarea>
+            </div>
+            <script>
+                CKEDITOR.replace('content');
+            </script>
+            <button type="submit" class="btn btn-default">Save</button>
+            <button type="button" class="btn btn-default">Cancel</button>
+        </form>
+    </div>
+</div> <!-- /container -->
+<footer class="footer-distributed">
+    <div class="footer-right">
+        <a href="https://www.facebook.com/xi.zhu.92"><i class="fa fa-facebook"></i></a>
+        <a href="#"><i class="fa fa-twitter"></i></a>
+        <a href="https://ca.linkedin.com/in/xi-zhu-4b1a5797"><i class="fa fa-linkedin"></i></a>
+        <a href="https://github.com/StriveX"><i class="fa fa-github"></i></a>
+    </div>
+    <div class="footer-left">
+        <p class="footer-links">
+            <a href="/">Home</a>·
+            <a href="/#blog">Blog</a>·
+            <a href="/about">About</a>
+        </p>
+        <p>Xi Zhu; Last updated on March 2016</p>
+    </div>
+</footer>
+
+<!-- // <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script> -->
+<script src="/javascripts/bootstrap.min.js"></script>
+<script type="text/javascript">
+    function save_post() {
+        var data = CKEDITOR.instances.editor1.getData();
+        console.log(data);
+    }
+</script>
+</body>
+</html>

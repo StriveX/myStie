@@ -1,35 +1,6 @@
-var Post = require('../lib/blog/post.js');
+var Post = require('../lib/post.js');
 
-exports.list = function(req, res, next) {
-    var page = req.page;
-    var type = req.params.type || 'overview';
-    var fullpage = req.params.fullpage;  // if params.fullpage not defined (fullpage null) => fullpage
-    Post.getByRange(page.number, page.perpage, type, function(err, posts){
-    	if (err) return next(err);
-        if (!fullpage) {
-            res.render('public/fullpage', {
-                posts: posts,
-                type: type,
-                page: page.number,
-                pages: page.count
-            });
-        } else {
-            res.render('public/section', {
-                posts: posts
-            });
-        }
-    	
-    })
-};
-
-exports.submit = function(req, res, next) {
-    var data = req.body;
-    Post.save(data, function(err) {
-        if (err) return next(err);
-    });
-    res.redirect('/blog/' + data.category);
-}
-
+/* Get single post */
 exports.post = function(req, res, next) {
     var id = req.params.id;
     Post.getById(id, function(err, post) {
@@ -38,8 +9,88 @@ exports.post = function(req, res, next) {
         {
             title: post.post_title,
             date: post.post_date,
-            content: post.post,
-            //type: post.type
+            content: post.post
         });
     })
+};
+
+exports.preview = function(req, res, next) {
+    Post.getByRange(0, 3, "blog", function(err, posts){
+        if (err) return next(err);
+        res.render('home', {
+            posts: posts,
+            page: 0,
+            pages: 0
+        });
+    })
+};
+
+exports.pageview = function(req, res, next) {
+    var page = req.page;
+    Post.getByRange(page.number, page.perpage, "blog", function(err, posts){
+        if (err) return next(err);
+        for (var i=0; i<length(posts); i++) {
+            posts[i] = posts[i].slice(0,5);
+        }
+        res.render('public/blog', {
+            posts: posts,
+            page: page.number+1,
+            pages: page.count
+        });
+    })
+};
+
+/* Get list of posts*/
+exports.list = function(req, res, next) {
+    var page = req.page; // from page middleware
+    // var type = req.params.type || 'overview';
+    Post.getByRange(page.number, page.perpage, "blog", function(err, posts){
+    	if (err) return next(err);
+        res.render('public/blog', {
+            posts: posts,
+            page: page.number + 1,
+            pages: page.count
+        });	
+    })
+};
+
+exports.form = function(req, res, next) {
+    var psot_id = req.params.id;
+    if (typeof psot_id === 'undefined') { //TODO
+        res.render('forms/post', {
+            isEdit: false
+        });
+    } else {
+        Post.getById(psot_id, function(err, post) {
+            if (err) return next(err);
+            res.render('forms/post', {
+                isEdit: true,
+                id: psot_id,
+                title: post.post_title,
+                content: post.post
+            });
+        }); 
+    }
+}
+
+/* Create/ Edit post, depends on if id is defined*/
+exports.submit = function(req, res, next) {
+    var data = req.body;
+    var post = new Post({
+        id: data.id,
+        title: data.title,
+        content: data.content,
+        type: "blog"
+    });
+    post.save(function(err) {
+        if (err) return next(err);
+    });
+    res.redirect('/');
+}
+
+exports.delete = function(req, res, next) {
+    var id = req.params.id; //TODO: security
+    Post.delete(id, function(err) {
+        if (err) return next(err);
+    });
 }

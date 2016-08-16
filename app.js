@@ -8,26 +8,21 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var methodOverride = require('method-override');
 
-/***** Middle ware *****/
+/*************** Middlewares ***************/
 var user = require('./lib/middleware/user');
 var page = require('./lib/middleware/page');
 var auth = require('./lib/middleware/auth');
-
+/*************** Objects ***************/
 var message = require('./lib/messages');
-var entry = require('./lib/entry');
-var post = require('./lib/blog/post');
-
+var post = require('./lib/post');
+/*************** Routes ***************/
 var register = require('./routes/register');
 var login = require('./routes/login');
-var entries = require('./routes/entries');
-var collection = require('./routes/collections');
-
 var blog = require('./routes/blogs');
 
 var app = express();
 
 app.set('port', process.env.PORT || 3000);
-// view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -48,46 +43,50 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(user);
 app.use(message);
 
-
+// depreciate
 app.get('/', function(req, res) {
     res.render('index');
 });
-app.get('/projects', function(req, res) {
-    console.log("HI");
-    res.render('projects');
+
+app.get('/home', blog.preview);
+
+app.get('/home/blog/:page', page(5, post.count), blog.pageview);
+app.get('/home/blog', function (req, res) {
+    res.render('blogs');
 });
-app.get('/about', function(req, res) {
+app.get('/home/blog/post/:id', blog.post);
+
+app.get('/home/status', function(req, res) {
     res.render('about');
 });
+app.get('/home/projects', function(req, res) {
+    res.render('projects');
+});
+
+app.get('/about', auth.restrict, function(req, res) {
+    res.render('about');
+});
+app.get('/admin', function(req, res) {
+    res.render('manage');
+});
+
+app.get('/admin/blog/:id?', auth.permission(0), blog.form);
+app.post('/admin/blog/:id?', auth.permission(0), blog.submit);
 
 
 
-
-app.get('/register', register.form);
+// app.get('/register', register.form);
 app.post('/register', register.submit);
 app.get('/login', login.form);
 app.post('/login', login.submit);
 app.get('/logout', login.logout);
 
-// app.get('/dataloop', page(entry.count, 5), entries.list);
-app.get('/dataloop/', entries.list);
-app.post('/dataloop/', entries.submit);
-app.get('/dataloop/idea', function(req, res) {
-    res.render('idea', { title: 'Idea' });
-});
-
-app.get('/dataloop/:name', collection.form);
-app.post('/dataloop/:name', collection.submit);
-app.delete('/dataloop/:name', collection.remove);
 
 /****** BLOG Routings. ******/
 app.get('/blog', auth.restrict, function(req, res) {res.render('public/blog');});
 app.get('/blog/post/:id', blog.post);
-app.get('/blog/:type/:page?/:fullpage?', page(5,post.count), blog.list);
-app.get('/manage', auth.permission('onwer'), function(req, res) {
-    res.render('public/manage');
-});
-app.post('/manage', auth.restrict, auth.permission('onwer'), blog.submit);
+app.get('/blog/:type/:page?/', page(5, post.count), blog.list);
+
 /****************************/
 
 
@@ -99,7 +98,6 @@ app.use(function(req, res, next) {
         title: 'Not Found',
         message: 'This page does not exist.'
     });
-
     var err = new Error('Not Found');
     err.status = 404;
     next(err);

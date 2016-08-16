@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	<meta name="description" content="">
+	<meta name="author" content="Xi Zhu">
+	<link rel="icon" href="/favicon.ico">
+
+	<title>Xi Zhu's Website</title>
+
+	<!-- Bootstrap core CSS -->
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<!-- AwesomeFont core CSS -->
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+	<!-- Custom styles for this template -->
+	<link href="/assets/css/home.css" rel="stylesheet">
+	<link href="/css/general.css" rel="stylesheet">
+
+	<!-- jQuery core script -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<!-- ckEditor core script -->
+	<script src="/javascripts/ckeditor/ckeditor.js"></script>
+</head>
+
+<body>
+
+<% include menu %>
+
+<div class="bg"></div>
+
+<div class="jumbotron">
+	<div class="container">
+		<h1>Xi Zhu</h1>
+		<p>A humble programmer with big dream.</p>
+		<p><a class="btn btn-primary" href="files/resume.pdf" role="button">Resume</a></p>
+	</div>
+</div>
+
+<div class="container marketing">
+	<!-- Example row of columns -->
+
+	<div class="row">
+		<div class="col-md-8">
+			<div class="page-header">
+				<h1 id="blog">Blog</h1>
+			</div>
+			<div id="blog_block">
+				<% include public/blog %>
+			</div>
+		</div>
+
+		<div class="col-md-4">
+			<div class="panel panel-default">
+				<div class="panel-heading"><strong>Current Status </strong><small>Update on May 13th, 2016</small>
+				</div>
+				<div class="panel-body">
+					<ul>
+						<li>Currently in my 4B term. Courses taking:
+							<ul>
+								<li>Networking</li>
+								<li>Distributed System</li>
+								<li>Artificial Intelligence</li>
+								<li>Sampling and Experimental Design (Statistics)</li>
+								<li>Forecasting (Statistics)</li>
+							</ul>
+						</li>
+						<li>Undergraduate research assistant with professor <a href="https://cs.uwaterloo.ca/~ssalihog/">Semih Salihoglu</a>. Working on distributed database (SparkSQL) algorigthms on graph data.
+							<ul>
+								<li>The goal is to find triangle and connected cliques in a graph by self-join on the table. Currently, we want to find the run time and intermediate size of these joins.</li>
+							</ul>
+						</li>
+						<li>Work at Drvie.ai next term (Sept-Dec)
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="page-header">
+			<h2>Projects <a href="/projects"><small>view details &raquo;</small></a></h2>
+		</div>
+		<div class="col-md-4">
+			<h2>Double Tetris</h2>
+			<p>A Tetris game build on iOS. Allow two players connect with each other via bluetooth or Game Center for two-perpson game. Two players play the game on same fields, and fight for one next shape. The faster player will obtain more shapes, so more score. </p>
+		</div>
+		<div class="col-md-4">
+			<h2>DataLoop</h2>
+			<p>Users could create their own data set on certain topic with customized data fields. When the data become large, analysis with machine learning method on the data will give interesting found. Users could also participate in other people's data sets and contribute their own data. This will also help users find friends having similar situation as themselves.</p>
+		</div>
+		<div class="col-md-4">
+			<h2>Traveling</h2>
+			<p>Travellers will hit on or hear of some attractive places across the world during their life. This app helps them bookmark these places, and create a plan. During the trip, travellers take pictures or write stories on this app. The trip information, like the route, cost, schedule, will be collected and give suggestions for future travellers.</p>
+		</div>
+	</div>
+</div> <!-- /container -->
+
+<footer class="footer-distributed">
+	<div class="footer-right">
+		<a href="https://www.facebook.com/xi.zhu.92"><i class="fa fa-facebook"></i></a>
+		<a href="#"><i class="fa fa-twitter"></i></a>
+		<a href="https://ca.linkedin.com/in/xi-zhu-4b1a5797"><i class="fa fa-linkedin"></i></a>
+		<a href="https://github.com/StriveX"><i class="fa fa-github"></i></a>
+	</div>
+	<div class="footer-left">
+		<p class="footer-links">
+			<a href="/">Home</a>·
+			<a href="/#blog">Blog</a>·
+			<a href="/about">About</a>
+		</p>
+		<p>Xi Zhu; Last updated on March 2016</p>
+	</div>
+</footer>
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+			</div>
+			<div class="modal-body">
+				<div class="col-md-6">
+					<p>Mr. Zhu was born in Febrary, 1993 and spent his childhood in Jinan, China.
+						He has a natural interest in fine art and math, and also enjoys travelling since young.
+						After graduating from high school, he came to Canada to have his undergraduate education at University of Waterloo. <br />
+						He intended to take major in mathematical finance in his first year. Until he got the chance to write real </p>
+				</div>
+				<div class="col-md-6">
+					<p>programs when he was Co-op at AIG, he found the enjoyment of programming and finally understood what is his true love. <br />
+						Today, Mr. Zhu eagerly is gulping down knowledge with unmatched enthusiasm.
+						As a CS student who interests also in statistics and optimization, he is aiming at data analysis studying. Hopefully, he could make his contribution to this world.</p>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary">Save changes</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script src="/javascripts/bootstrap.min.js"></script>
+<script type="text/javascript">
+	$("[data-toggle=popover]").popover();
+	var jumboHeight = $('.jumbotron').outerHeight();
+	function parallax(){
+		var scrolled = $(window).scrollTop();
+		$('.bg').css('height', (jumboHeight-scrolled) + 'px');
+	}
+	$(window).scroll(function(e){
+		parallax();
+	});
+</script>
+</body>
+</html>

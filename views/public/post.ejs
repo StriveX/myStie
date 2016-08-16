@@ -1,67 +1,90 @@
-<!DOCTYPE HTML>
-<!--
-	Landed by HTML5 UP
-	html5up.net | @n33co
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-	<head>
-		<title>Xi Zhu | Blog</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-		<link rel="stylesheet" href="/assets/css/main.css" />
-		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
-		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
-	</head>
-	<body>
-		<div id="page-wrapper">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	<meta name="description" content="">
+	<meta name="author" content="Xi Zhu">
+	<link rel="icon" href="/favicon.ico">
 
-			<!-- Header -->
-				<% include ../menu %>
+	<title>Xi Zhu's Blogs</title>
 
-			<!-- Main -->
-				<div id="main" class="wrapper style1">
-					<div class="container">
-						<header class="major">
-							<h2><%= title %></h2>
-							<p>Ipsum dolor feugiat aliquam tempus sed magna lorem consequat accumsan</p>
-						</header>
-						<div class="row 150%">
-							<div class="12u$(medium)">
+	<!-- Bootstrap core CSS -->
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<!-- AwesomeFont core CSS -->
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+	<!-- Custom styles for this template -->
+	<link href="/assets/css/home.css" rel="stylesheet">
+	<link href="/css/general.css" rel="stylesheet">
 
-								<!-- Sidebar -->
-									<%= content %>
+	<!-- jQuery core script -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<!-- ckEditor core script -->
+	<script src="/javascripts/ckeditor/ckeditor.js"></script>
+</head>
 
-							</div>
-						</div>
-					</div>
-				</div>
+<body>
 
-			<!-- Footer -->
-				<footer id="footer">
-					<ul class="icons">
-						<li><a href="#" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
-						<li><a href="#" class="icon alt fa-facebook"><span class="label">Facebook</span></a></li>
-						<li><a href="#" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
-						<li><a href="#" class="icon alt fa-instagram"><span class="label">Instagram</span></a></li>
-						<li><a href="#" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
-						<li><a href="#" class="icon alt fa-envelope"><span class="label">Email</span></a></li>
-					</ul>
-					<ul class="copyright">
-						<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-					</ul>
-				</footer>
+<% include ../menu %>
 
+<div class="bg"></div>
+
+<div class="jumbotron">
+	<div class="container">
+		<h1>Xi Zhu</h1>
+		<p>A humble programmer with big dream.</p>
+		<p><a class="btn btn-primary" href="files/resume.pdf" role="button">Resume</a></p>
+	</div>
+</div>
+
+<div class="container marketing">
+	<!-- Example row of columns -->
+
+	<div class="row">
+		<div class="col-md-12">
+			<div class="page-header">
+				<h2><%= title %></h2>
+			</div>
+			<div id="blog_block">
+				<%- content %>
+			</div>
 		</div>
+	</div>
 
-		<!-- Scripts -->
-			<script src="/assets/js/jquery.min.js"></script>
-			<script src="/assets/js/jquery.scrolly.min.js"></script>
-			<script src="/assets/js/jquery.dropotron.min.js"></script>
-			<script src="/assets/js/jquery.scrollex.min.js"></script>
-			<script src="/assets/js/skel.min.js"></script>
-			<script src="/assets/js/util.js"></script>
-			<script src="/assets/js/main.js"></script>
-	</body>
+</div> <!-- /container -->
+
+<footer class="footer-distributed">
+	<div class="footer-right">
+		<a href="https://www.facebook.com/xi.zhu.92"><i class="fa fa-facebook"></i></a>
+		<a href="#"><i class="fa fa-twitter"></i></a>
+		<a href="https://ca.linkedin.com/in/xi-zhu-4b1a5797"><i class="fa fa-linkedin"></i></a>
+		<a href="https://github.com/StriveX"><i class="fa fa-github"></i></a>
+	</div>
+	<div class="footer-left">
+		<p class="footer-links">
+			<a href="/">Home</a>·
+			<a href="/#blog">Blog</a>·
+			<a href="/about">About</a>
+		</p>
+		<p>Xi Zhu; Last updated on March 2016</p>
+	</div>
+</footer>
+
+<script src="/javascripts/bootstrap.min.js"></script>
+<script type="text/javascript">
+	var curPage = "1";
+	$("[data-toggle=popover]").popover();
+	var jumboHeight = $('.jumbotron').outerHeight();
+	function parallax(){
+		var scrolled = $(window).scrollTop();
+		$('.bg').css('height', (jumboHeight-scrolled) + 'px');
+	}
+	$(window).scroll(function(e){
+		parallax();
+	});
+
+</script>
+</body>
 </html>
