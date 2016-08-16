@@ -48,11 +48,10 @@ app.get('/', function(req, res) {
     res.render('index');
 });
 
-app.get('/home', function(req, res) {
-    res.render('home');
-});
+app.get('/home', blog.preview);
 
-app.get('/home/blog/:page?', page(5, post.count), blog.list);
+app.get('/home/blog/:page', page(5, post.count), blog.list);
+app.get('/home/blog', page(5, post.count), blog.list);
 app.get('/home/blog/post/:id', blog.post);
 
 app.get('/home/status', function(req, res) {

@@ -21,6 +21,8 @@ exports.preview = function(req, res, next) {
         if (err) return next(err);
         res.render('home', {
             posts: posts,
+            page: 0,
+            pages: 0
         });
     })
 };
@@ -31,7 +33,7 @@ exports.pageview = function(req, res, next) {
         if (err) return next(err);
         res.render('public/blog', {
             posts: posts,
-            page: page.number,
+            page: page.number+1,
             pages: page.count
         });
     })

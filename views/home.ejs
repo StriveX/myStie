@@ -48,7 +48,7 @@
 				<h1 id="blog">Blog</h1>
 			</div>
 			<div id="blog_block">
-
+				<% include public/blog %>
 			</div>
 		</div>
 
@@ -147,7 +147,6 @@
 
 
 <script src="/javascripts/bootstrap.min.js"></script>
-<script src="javascripts/home_blog.js"></script>
 <script type="text/javascript">
 	$("[data-toggle=popover]").popover();
 	var jumboHeight = $('.jumbotron').outerHeight();
@@ -157,10 +156,6 @@
 	}
 	$(window).scroll(function(e){
 		parallax();
-	});
-
-	$(document).ready(function() {
-		loadBlogs("home/blog/1");
 	});
 </script>
 </body>
