@@ -50,8 +50,10 @@ app.get('/', function(req, res) {
 
 app.get('/home', blog.preview);
 
-app.get('/home/blog/:page', page(5, post.count), blog.list);
-app.get('/home/blog', page(5, post.count), blog.list);
+app.get('/home/blog/:page', page(5, post.count), blog.pageview);
+app.get('/home/blog', function (req, res) {
+    res.render('blogs');
+});
 app.get('/home/blog/post/:id', blog.post);
 
 app.get('/home/status', function(req, res) {
