@@ -29,9 +29,9 @@ exports.pageview = function(req, res, next) {
     var page = req.page;
     Post.getByRange(page.number, page.perpage, "blog", function(err, posts){
         if (err) return next(err);
-        for (var i=0; i<length(posts); i++) {
-            posts[i] = posts[i].slice(0,5);
-        }
+        // for (var i=0; i<posts.length; i++) {
+        //     posts[i] = String(posts[i]).slice(0,5);
+        // }
         res.render('public/blog', {
             posts: posts,
             page: page.number+1,
