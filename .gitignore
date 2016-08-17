@@ -3,4 +3,4 @@ lib/connDB.js
 _ckeditor/
 node_modules/
 
-public/javascripts/
+public/javascripts/ckeditor/
