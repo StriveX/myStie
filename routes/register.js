@@ -20,7 +20,6 @@ exports.submit = function(req, res, next) {
 				info: data.info
 			});
 			user.save(function(err) {
-				console.log("error");
 				if (err) return next(err);
 				req.session.uid = user.user_id;
 				res.redirect('/blog');

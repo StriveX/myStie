@@ -23,9 +23,14 @@ $("#login-register-toggle").click(function() {
     $(".login-register-title").toggle();
     $(".login-register-form").toggle();
 });
-$("#register-type-toggle").click(function() {
-    $("#employerField").toggle();
-});
+
+function typeCheck() {
+    if (document.getElementById('registerType1').checked) {
+        document.getElementById('employerField').style.display = 'block';
+    }
+    else document.getElementById('employerField').style.display = 'none';
+
+}
 
 $("#login-form").submit(function (e) {
     $.ajax({

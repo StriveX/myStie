@@ -19,10 +19,10 @@
 		<form method="post" action="/register" onsubmit="return checkForm()" id="register-form">
 
 			<label class="radio-inline">
-				<input type="radio" name="user[type]" id="registerType1" value="employer"> Employer
+				<input type="radio" name="user[type]" id="registerType1" value="employer" onclick="javascript:typeCheck();" checked> Employer
 			</label>
 			<label class="radio-inline">
-				<input type="radio" name="user[type]" id="registerType2" value="friend"> Friend
+				<input type="radio" name="user[type]" id="registerType2" value="friend" onclick="javascript:typeCheck();"> Friend
 			</label>
 
 
@@ -40,7 +40,7 @@
 			</div>
 
 
-			<div id="employerField">
+			<div id="employerField" style="display:block">
 				<div class="form-group">
 					<label for="name">Organization Name</label>
 					<input type="text" class="form-control" id="name" name="user[orgname]" placeholder="Organization Name">
