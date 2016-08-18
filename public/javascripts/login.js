@@ -61,6 +61,7 @@ $("#register-form").submit(function (e) {
         success: function (data) {
             if (data.status == "success") {
                 $("#loginModal").modal('hide');
+                location.reload();
             } else if (data.status == "failed") {
                 $("#register-alert").html(data.message);
                 $("#register-alert").css("display","block");

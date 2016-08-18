@@ -27,7 +27,8 @@ exports.submit = function(req, res, next) {
 			}
 			user.save(function(err) {
 				if (err) return next(err);
-				req.session.uid = user.user_id;
+				req.session.uid = user.id;
+				res.locals.user = user;
 				if (data.type == "employer") {
 					User.saveOrginization(data.orgname, data.website, user.id, function (err) {
 						if (err) return next(err);
