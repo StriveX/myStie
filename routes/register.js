@@ -13,6 +13,7 @@ exports.submit = function(req, res, next) {
 		if (user) {
 			// res.err("Username already exists.");
 			// res.redirect('back');
+			res.json({status: 'failed', message: "Username already exists."});
 		} else {
 			user = new User({
 				name: data.name,
@@ -30,10 +31,10 @@ exports.submit = function(req, res, next) {
 				if (data.type == "employer") {
 					User.saveOrginization(data.orgname, data.website, user.id, function (err) {
 						if (err) return next(err);
-						res.redirect('/home');
+						res.json({status: 'success', message: ""});
 					});
 				} else {
-					res.redirect('/about');
+					res.json({status: 'success', message: ""});
 				}
 			});
 		}

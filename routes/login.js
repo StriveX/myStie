@@ -12,10 +12,9 @@ exports.submit = function(req, res, next) {
 			req.session.uid = user.user_id;
 			res.locals.user = user;
 			// req.session.utype = user.type;
-			res.status(200).render('menu');
+			res.json({status: 'success', message: ""});
 		} else {
-			res.error("Invalid user or password.");
-			res.status(500).json({result: 'failed'});
+			res.json({status: 'failed', message: "Invalid user or password."});
 		}
 	});
 };

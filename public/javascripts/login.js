@@ -32,12 +32,21 @@ $("#login-form").submit(function (e) {
         data: $('#login-form').serialize(),
         success: function (data) {
             // console.log(data);
-            $("#loginModal").modal('hide');
-            $("#menu").html(data);
+            if (data.status == "success") {
+                $("#loginModal").modal('hide');
+                // $("#menu").html(data);
+                location.reload();
+            } else if (data.status == "failed") {
+                $("#login-alert").html(data.message);
+                $("#login-alert").css("display","block");
+                $("#login-alert").fadeTo(2000, 500).slideUp(500, function(){
+                    $("#login-alert").slideUp(500);
+                });
+            }
+
         },
         error: function(result){
             console.log(result);
-            $("#login-alert").css("display","block");
         }
     });
     e.preventDefault();
@@ -50,7 +59,15 @@ $("#register-form").submit(function (e) {
         datatype: "json",
         data: $('#register-form').serialize(),
         success: function (data) {
-            $("#loginModal").modal('hide');
+            if (data.status == "success") {
+                $("#loginModal").modal('hide');
+            } else if (data.status == "failed") {
+                $("#register-alert").html(data.message);
+                $("#register-alert").css("display","block");
+                $("#register-alert").fadeTo(2000, 500).slideUp(500, function(){
+                    $("#register-alert").slideUp(500);
+                });
+            }
         },
         error: function(result){
             console.log(result);
