@@ -81,12 +81,6 @@ app.get('/login', login.form);
 app.post('/login', login.submit);
 app.get('/logout', login.logout);
 
-
-/****** BLOG Routings. ******/
-app.get('/blog', auth.restrict, function(req, res) {res.render('public/blog');});
-app.get('/blog/post/:id', blog.post);
-app.get('/blog/:type/:page?/', page(5, post.count), blog.list);
-
 /****************************/
 
 
