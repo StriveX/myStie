@@ -19,17 +19,9 @@ $( "#target" ).submit(function( event ) {
     event.preventDefault();
 });
 
-$("#login-register-toggle").click(function() {
-    $(".login-register-title").toggle();
-    $(".login-register-form").toggle();
-});
-
 function typeCheck() {
-    if (document.getElementById('registerType1').checked) {
-        document.getElementById('employerField').style.display = 'block';
-    }
-    else document.getElementById('employerField').style.display = 'none';
-
+    if ($('#registerType1').is(':checked')) $('#employerField').css('display','block');
+    else $('#employerField').css('display','none');
 }
 
 $("#login-form").submit(function (e) {
@@ -45,6 +37,7 @@ $("#login-form").submit(function (e) {
         },
         error: function(result){
             console.log(result);
+            $("#login-alert").css("display","block");
         }
     });
     e.preventDefault();
@@ -57,10 +50,7 @@ $("#register-form").submit(function (e) {
         datatype: "json",
         data: $('#register-form').serialize(),
         success: function (data) {
-            // console.log(data);
-            if (data  === 'ok' ) {
-                $("#loginModal").modal('hide');
-            }
+            $("#loginModal").modal('hide');
         },
         error: function(result){
             console.log(result);

@@ -1,61 +1,77 @@
-	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		<h4 class="modal-title"><span class="login-register-title">Login</span><span class="login-register-title" style="display: none">Register</span></h4>
+
+<div class="modal-body login-register-form">
+
+
+	<div class="tabbable"> <!-- Only required for left/right tabs -->
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="#login-tab" data-toggle="tab">Login</a></li>
+			<li><a href="#register-tab" data-toggle="tab">Register</a></li>
+		</ul>
+		<div class="tab-content">
+			<div class="tab-pane active" id="login-tab">
+				<form method="post" action="/login" id="login-form">
+					<div class="form-group">
+						<label for="name">Name</label>
+						<input type="text" class="form-control" id="name" name="user[name]" placeholder="Name">
+					</div>
+					<div class="form-group">
+						<label for="password">Password</label>
+						<input type="password" class="form-control" id="password" name="user[pass]" placeholder="Password">
+					</div>
+					<div class="alert alert-danger" id="login-alert" role="alert" style="display: none">Hello</div>
+					<div class="text-right">
+						<button type="button" class="btn btn-default" data-toggle="popover" data-content="Access may be restricted without login." data-trigger="hover" data-placement="bottom" data-dismiss="modal">Close</button>
+						<button type="submit" class="btn btn-primary" id="login-submit">Login</button>
+					</div>
+				</form>
+			</div>
+			<div class="tab-pane" id="register-tab">
+				<form method="post" action="/register" onsubmit="return checkForm()" id="register-form">
+					<!--<div class="well">Account is used to display relevant content for different group. N</div>-->
+					<div class="form-group">
+						<label class="radio-inline">
+							<input type="radio" name="user[type]" id="registerType1" value="employer" onclick="javascript:typeCheck();" checked> Employer
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="user[type]" id="registerType2" value="friend" onclick="javascript:typeCheck();"> Friend
+						</label>
+					</div>
+
+
+					<div class="form-group">
+						<label for="name">Name</label>
+						<input type="text" class="form-control" id="name" name="user[name]" placeholder="Name" required autocomplete="off">
+					</div>
+					<div class="form-group">
+						<label for="exampleInputEmail1">Email address</label>
+						<input type="email" class="form-control" id="email" name="user[email]" placeholder="Email" required autocomplete="off">
+					</div>
+					<div class="form-group">
+						<label for="password">Password</label>
+						<input type="password" class="form-control" id="password" name="user[pass]" placeholder="Password" required autocomplete="off">
+					</div>
+
+
+					<div id="employerField" style="display:block">
+						<div class="form-group">
+							<label for="name">Organization Name</label>
+							<input type="text" class="form-control" id="name" name="user[orgname]" placeholder="Organization Name">
+						</div>
+						<div class="form-group">
+							<label for="name">Website</label>
+							<input type="text" class="form-control" id="name" name="user[website]" placeholder="Website">
+						</div>
+					</div>
+					<div class="text-right">
+						<button type="button" class="btn btn-default" data-toggle="popover" data-content="Access may be restricted without account." data-trigger="hover" data-placement="bottom" data-dismiss="modal">Close</button>
+						<button type="submit" class="btn btn-primary">Register</button>
+					</div>
+				</form>
+			</div>
+		</div>
 	</div>
-	<div class="modal-body login-register-form">
-		<form method="post" action="/login" id="login-form">
-			<div class="form-group">
-				<label for="name">Name</label>
-				<input type="text" class="form-control" id="name" name="user[name]" placeholder="Name">
-			</div>
-			<div class="form-group">
-				<label for="password">Password</label>
-				<input type="password" class="form-control" id="password" name="user[pass]" placeholder="Password">
-			</div>
-			<button type="submit" class="btn btn-default" id="login-submit">Login</button>
-		</form>
-	</div>
-	<div class="modal-body login-register-form" style="display: none">
-		<form method="post" action="/register" onsubmit="return checkForm()" id="register-form">
 
-			<label class="radio-inline">
-				<input type="radio" name="user[type]" id="registerType1" value="employer" onclick="javascript:typeCheck();" checked> Employer
-			</label>
-			<label class="radio-inline">
-				<input type="radio" name="user[type]" id="registerType2" value="friend" onclick="javascript:typeCheck();"> Friend
-			</label>
+</div>
 
 
-			<div class="form-group">
-				<label for="name">Name</label>
-				<input type="text" class="form-control" id="name" name="user[name]" placeholder="Name">
-			</div>
-			<div class="form-group">
-				<label for="exampleInputEmail1">Email address</label>
-				<input type="email" class="form-control" id="email" name="user[email]" placeholder="Email">
-			</div>
-			<div class="form-group">
-				<label for="password">Password</label>
-				<input type="password" class="form-control" id="password" name="user[pass]" placeholder="Password">
-			</div>
-
-
-			<div id="employerField" style="display:block">
-				<div class="form-group">
-					<label for="name">Organization Name</label>
-					<input type="text" class="form-control" id="name" name="user[orgname]" placeholder="Organization Name">
-				</div>
-				<div class="form-group">
-					<label for="name">Website</label>
-					<input type="text" class="form-control" id="name" name="user[website]" placeholder="Website">
-				</div>
-			</div>
-
-			<button type="submit" class="btn btn-default">Submit</button>
-		</form>
-	</div>
-	<div class="modal-footer">
-		<button type="button" class="btn btn-default" id="login-register-toggle"><span class="login-register-title">Register</span><span class="login-register-title" style="display: none">Login</span></button>
-	</div>
-
-	<script src="/javascripts/login.js"></script>
+<script src="/javascripts/login.js"></script>
