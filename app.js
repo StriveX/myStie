@@ -5,10 +5,13 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var multer  = require('multer');
 var session = require('express-session');
 var methodOverride = require('method-override');
 
 /*************** Middlewares ***************/
+var upload = multer();
+
 var user = require('./lib/middleware/user');
 var page = require('./lib/middleware/page');
 var auth = require('./lib/middleware/auth');
@@ -19,6 +22,7 @@ var post = require('./lib/post');
 var register = require('./routes/register');
 var login = require('./routes/login');
 var blog = require('./routes/blogs');
+var gallery = require('./routes/gallery');
 
 var app = express();
 
@@ -26,9 +30,10 @@ app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+app.set('gallery', __dirname + '/public/life/images/gallery');
+
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-
 app.use(logger('dev'));
 app.use(methodOverride());
 app.use(session({ resave: false,
@@ -36,6 +41,7 @@ app.use(session({ resave: false,
                   secret: 'uwotm8' }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(methodOverride());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -48,19 +54,43 @@ app.get('/', function(req, res) {
     res.render('index');
 });
 
-app.get('/home', blog.preview);
+// app.get('/work', function(req, res) {
+//     res.render('index');
+// });
 
-app.get('/home/blog/:page', page(5, post.count), blog.pageview);
-app.get('/home/blog', function (req, res) {
-    res.render('blogs');
+app.get('/work/blog/:page', page(5, post.count, "blog"), blog.pageview);
+
+app.get('/work/blog/post/:id', blog.post);
+
+app.get('/work/projects', function(req, res) {
+    res.render('projects');
 });
-app.get('/home/blog/post/:id', blog.post);
+
+app.get('/life', gallery.pageview);
+
+app.get('/life/gallery', gallery.pageview);
+
+app.get('/life/gallery/upload', function(req, res) {res.render('life/upload');});
+
+app.post('/life/gallery/upload',
+    upload.single("recfile"),
+    gallery.submit(app.get('gallery'))
+);
+
+
+
+
+
+
+
+
+
+
+
+
 
 app.get('/home/status', function(req, res) {
     res.render('about');
-});
-app.get('/home/projects', function(req, res) {
-    res.render('projects');
 });
 
 app.get('/about', auth.restrict, function(req, res) {

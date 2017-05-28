@@ -1,0 +1,14 @@
+<% for(var i=0; i<gallery.length; i++) { %>
+    <article>
+        <a href="images/gallery/fulls/<%= gallery[i].post_desp %>" class="image">
+            <img src="images/gallery/thumbs/<%= gallery[i].post_desp %>" alt="" />
+        </a>
+        <div class="caption">
+            <h3><%= gallery[i].post_title %></h3>
+            <p><%= gallery[i].post %></p>
+            <ul class="actions">
+                <li><span class="button small">Details</span></li>
+            </ul>
+        </div>
+    </article>
+<% } %>

@@ -2,5 +2,7 @@ lib/connDB.js
 .idea/
 _ckeditor/
 node_modules/
+*/.DS_Store
+.DS_Store
 
 public/javascripts/ckeditor/
