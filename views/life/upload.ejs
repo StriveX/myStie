@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Photo</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/assets/css/main.css" />
+</head>
+
+<body>
+    <div id="wrapper" class="divided">
+
+        <section class="spotlight style4 content-align-left">
+            <div class="content">
+                <h1>Upload Photo</h1>
+                <p>Upload a photo to my gallery.</p>
+                <form method='post' enctype='multipart/form-data'  action="/life/gallery/upload">
+                    <p><input type='file' name='recfile' placeholder="Select file"/></p>
+                    <p><input type='text' name='title' placeholder='Title'/></p>
+                    <p><input type='text' name='content' placeholder='Description'/></p>
+                    <p><input type='submit' value='Upload'/></p>
+                </form>
+            </div>
+            <div class="image">
+                <img src="images/spotlight01.jpg" alt="" />
+            </div>
+        </section>
+    </div>
+</body>
+</html>

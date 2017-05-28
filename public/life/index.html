@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Xi Zhu's Life</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/assets/css/main.css" />
+</head>
+<body>
+
+<!-- Wrapper -->
+<div id="wrapper" class="divided">
+
+    <section class="banner style5 orient-left content-align-left image-position-center color1 invert onload-image-fade-in onload-content-fade-right">
+        <div class="content">
+            <h1>Xi Zhu's Life</h1>
+            <p class="major">I graduated from University of Waterloo with triple major in Computer Science, Statistics, and Computational Mathematics. I am currently working at York University under Professor Hui Jiang, focusing on Word Sense Disambiguation using deep learning method.</p>
+        </div>
+        <div class="image">
+            <img src="images/photo_background.jpg" alt="" />
+        </div>
+    </section>
+
+    <section class="wrapper style1 align-center">
+        <div class="inner">
+            <h2>My Gallery</h2>
+            <p>This is a <strong>Gallery</strong> element. It can behave as a lightbox (when given the <code>lightbox</code> class), and you can customize its <span class="demo-controls">appearance with a number of modifiers</span>, as well as assign it an optional <code>onload</code> or <code>onscroll</code> transition modifier (<a href="#reference-gallery">details</a>).</p>
+        </div>
+
+        <!-- Gallery -->
+        <div class="gallery style2 medium lightbox onscroll-fade-in">
+
+        </div>
+
+    </section>
+
+    <section class="wrapper style1 align-center">
+        <div class="inner">
+            <section>
+                <header>
+                    <h2>Places</h2>
+                </header>
+                <div class="content">
+                    <span class="image fit" id="map" style="height: 300px"></span>
+                </div>
+            </section>
+        </div>
+    </section>
+
+    <footer class="wrapper style1 align-center">
+        <div class="inner">
+            <ul class="icons">
+                <li><a href="#" class="icon style2 fa-twitter"><span class="label">Twitter</span></a></li>
+                <li><a href="#" class="icon style2 fa-facebook"><span class="label">Facebook</span></a></li>
+                <li><a href="#" class="icon style2 fa-instagram"><span class="label">Instagram</span></a></li>
+                <li><a href="#" class="icon style2 fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                <li><a href="#" class="icon style2 fa-envelope"><span class="label">Email</span></a></li>
+            </ul>
+        </div>
+    </footer>
+
+</div>
+
+<!-- Scripts -->
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/js/jquery.scrollex.min.js"></script>
+<script src="/assets/js/jquery.scrolly.min.js"></script>
+<script src="/assets/js/skel.min.js"></script>
+<script src="/assets/js/util.js"></script>
+<script src="/assets/js/main.js"></script>
+<script type="text/javascript">
+    function initMap() {
+        // Create a map object and specify the DOM element for display.
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: -34.397, lng: 150.644},
+            scrollwheel: false,
+            zoom: 8
+        });
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDK0y5WpjZV1tz5g7B6J0xsLYSAu34AgCM&callback=initMap" async defer></script>
+
+<script type="text/javascript">
+    function loadGallery() {
+        $.ajax({
+            url : "/life/gallery/",
+            type : "GET",
+            success : function(rst) {
+                $("#gallery").append($.parseHTML(rst));
+            },
+            error : function(xhr,errmsg,err) {
+            }
+        });
+    }
+    $(document).ready(function() {
+        loadGallery();
+    });
+</script>
+
+</body>
+</html>
