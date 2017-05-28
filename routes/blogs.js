@@ -29,14 +29,14 @@ exports.pageview = function(req, res, next) {
 
 exports.form = function(req, res, next) {
     var post_id = req.params.id;
-    if (typeof post_id === 'undefined') { //TODO
-        res.render('forms/post', {
+    if (typeof post_id === 'undefined') {
+        res.render('admin/upload/blog', {
             isEdit: false
         });
     } else {
         Post.getById(post_id, function(err, post) {
             if (err) return next(err);
-            res.render('forms/post', {
+            res.render('admin/upload/blog', {
                 isEdit: true,
                 id: post_id,
                 title: post.post_title,

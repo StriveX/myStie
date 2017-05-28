@@ -6,3 +6,4 @@ node_modules/
 .DS_Store
 
 public/javascripts/ckeditor/
+public/life/images/gallery/*

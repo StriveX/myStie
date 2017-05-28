@@ -49,15 +49,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(user);
 app.use(message);
 
-// depreciate
-app.get('/', function(req, res) {
-    res.render('index');
-});
-
-// app.get('/work', function(req, res) {
-//     res.render('index');
-// });
-
 app.get('/work/blog/:page', page(5, post.count, "blog"), blog.pageview);
 
 app.get('/work/blog/post/:id', blog.post);
@@ -66,11 +57,11 @@ app.get('/work/projects', function(req, res) {
     res.render('projects');
 });
 
-app.get('/life', gallery.pageview);
+/* Life */
 
 app.get('/life/gallery', gallery.pageview);
 
-app.get('/life/gallery/upload', function(req, res) {res.render('life/upload');});
+app.get('/life/gallery/upload', function(req, res) {res.render('admin/upload/gallery');});
 
 app.post('/life/gallery/upload',
     upload.single("recfile"),
