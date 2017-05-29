@@ -1,0 +1,122 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Xi Zhu's Work</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/assets/css/main.css" />
+</head>
+<body>
+
+<!-- Wrapper -->
+<div id="wrapper" class="divided">
+
+    <section class="banner style5 orient-left content-align-left image-position-center color1 invert onload-image-fade-in onload-content-fade-right">
+        <div class="content">
+            <h1>Xi Zhu's Work</h1>
+            <p class="major">I graduated from University of Waterloo with triple major in Computer Science, Statistics, and Computational Mathematics. I am currently working at York University under Professor Hui Jiang, focusing on Word Sense Disambiguation using deep learning method.</p>
+        </div>
+        <div class="image">
+            <img src="images/photo_background1.jpg" alt="" />
+        </div>
+    </section>
+
+    <section class="wrapper style1 align-center">
+        <div class="inner">
+            <div class="index align-left">
+
+                <section>
+                    <header>
+                        <h3>Post to Gallery</h3>
+                    </header>
+                    <div class="content">
+                        <form method='post' enctype='multipart/form-data' action="/life/gallery/upload">
+                            <div class="field half first">
+                                <input type='text' name='title' placeholder='Title'/>
+                            </div>
+                            <div class="field half">
+                                <input type='file' name='recfile' placeholder="Select file"/>
+                            </div>
+                            <div class="field first">
+                                <input type='text' name='content' placeholder='Description'/>
+                            </div>
+                            <p><input type='submit' class="button special" value='Upload'/></p>
+                        </form>
+                        <% include message %>
+                    </div>
+                </section>
+
+                <section>
+                    <header>
+                        <h3>Blogs</h3>
+                    </header>
+                    <div class="content">
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                    <th>Date</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <% for(var i=0; i<posts.length; i++) { %>
+                                    <tr>
+                                        <td><%= posts[i].post_id %></td>
+                                        <td width="60%"><a href="/admin/blog/<%= posts[i].post_id %>"><%= posts[i].post_title %></a></td>
+                                        <td><%= posts[i].post_date %></td>
+                                    </tr>
+                                <% } %>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </section>
+
+    <footer class="wrapper style1 align-center">
+        <div class="inner">
+            <ul class="icons">
+                <li><a href="#" class="icon style2 fa-twitter"><span class="label">Twitter</span></a></li>
+                <li><a href="#" class="icon style2 fa-facebook"><span class="label">Facebook</span></a></li>
+                <li><a href="#" class="icon style2 fa-instagram"><span class="label">Instagram</span></a></li>
+                <li><a href="#" class="icon style2 fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                <li><a href="#" class="icon style2 fa-envelope"><span class="label">Email</span></a></li>
+            </ul>
+        </div>
+    </footer>
+
+</div>
+
+<!-- Scripts -->
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/js/jquery.scrollex.min.js"></script>
+<script src="/assets/js/jquery.scrolly.min.js"></script>
+<script src="/assets/js/skel.min.js"></script>
+<script src="/assets/js/util.js"></script>
+<script src="/assets/js/main.js"></script>
+<script type="text/javascript">
+    var curPage = "1";
+    function loadBlogs(page) {
+        $.ajax({
+            url : "/work/blog/" + page,
+            type : "GET",
+            success : function(rst) {
+                $("#blogs").append($.parseHTML(rst));
+            },
+            error : function(xhr,errmsg,err) {
+            }
+        });
+    }
+    $(document).ready(function() {
+        loadBlogs(curPage);
+    });
+    $(".pagination>a").click(function() {
+        loadBlogs($(this).text());
+    });
+</script>
+
+</body>
+</html>

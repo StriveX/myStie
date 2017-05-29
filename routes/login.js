@@ -1,7 +1,7 @@
 var User = require('../lib/user');
 
 exports.form = function(req, res) {
-	res.render('login', {title:'Login'});
+	res.render('login');
 };
 
 exports.submit = function(req, res, next) {
@@ -11,10 +11,11 @@ exports.submit = function(req, res, next) {
 		if (user) {
 			req.session.uid = user.user_id;
 			res.locals.user = user;
-			// req.session.utype = user.type;
-			res.json({status: 'success', message: ""});
+			res.redirect(req.session.returnTo || '/');
+			req.session.returnTo = '/';
 		} else {
-			res.json({status: 'failed', message: "Invalid user or password."});
+			res.error("Invalid username or password.");
+			res.redirect("back");
 		}
 	});
 };

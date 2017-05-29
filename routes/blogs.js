@@ -7,6 +7,7 @@ exports.post = function(req, res, next) {
         if (err) return next(err);
         res.render('work/blog',
         {
+            id: post.post_id,
             title: post.post_title,
             date: post.post_date,
             content: post.post
@@ -31,13 +32,12 @@ exports.form = function(req, res, next) {
     var post_id = req.params.id;
     if (typeof post_id === 'undefined') {
         res.render('admin/upload/blog', {
-            isEdit: false
+            id: -1
         });
     } else {
         Post.getById(post_id, function(err, post) {
             if (err) return next(err);
             res.render('admin/upload/blog', {
-                isEdit: true,
                 id: post_id,
                 title: post.post_title,
                 content: post.post
@@ -59,7 +59,7 @@ exports.submit = function(req, res, next) {
     post.save(function(err) {
         if (err) return next(err);
     });
-    res.redirect('/');
+    res.redirect('/work');
 };
 
 exports.delete = function(req, res, next) {

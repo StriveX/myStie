@@ -201,21 +201,6 @@
 
 			// Style #2.
 				$('.gallery')
-					.on('wheel', '.inner', function(event) {
-
-						var	$this = $(this),
-							delta = (event.originalEvent.deltaX * 10);
-
-						// Cap delta.
-							if (delta > 0)
-								delta = Math.min(25, delta);
-							else if (delta < 0)
-								delta = Math.max(-25, delta);
-
-						// Scroll.
-							$this.scrollLeft( $this.scrollLeft() + delta );
-
-					})
 					.on('mouseenter', '.forward, .backward', function(event) {
 
 						var $this = $(this),
@@ -249,7 +234,7 @@
 							href = $a.attr('href');
 
 						// Not an image? Bail.
-							if (!href.match(/\.(jpg|gif|png|mp4)$/))
+							if (!href.match(/\.(jpg|JPG|gif|png|mp4)$/))
 								return;
 
 						// Prevent default.

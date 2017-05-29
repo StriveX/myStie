@@ -64,7 +64,8 @@ exports.submit = function (dir) {
                 post.save(function(err) {
                     if (err) return next(err);
                 });
-                res.redirect('/life');
+                res.message("Upload successfully.");
+                res.redirect('/admin');
             });
         });
     };

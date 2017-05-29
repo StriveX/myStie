@@ -2,7 +2,7 @@ var User = require('../lib/user');
 var connection = require('../lib/connDB');
 
 exports.form = function(req, res) {
-	res.render('register', {title: 'Sign up'});
+	res.render('register');
 };
 
 exports.submit = function(req, res, next) {

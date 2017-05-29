@@ -41,7 +41,7 @@
                     <h2>Places</h2>
                 </header>
                 <div class="content">
-                    <span class="image fit" id="map" style="height: 300px"></span>
+                    <span class="image fit" id="map" style="height: 400px"></span>
                 </div>
             </section>
         </div>
@@ -72,13 +72,13 @@
     function initMap() {
         // Create a map object and specify the DOM element for display.
         var map = new google.maps.Map(document.getElementById('map'), {
-            center: {lat: -34.397, lng: 150.644},
+            center: {lat: 39.850033, lng: -87.6500523},
             scrollwheel: false,
-            zoom: 8
+            zoom: 4
         });
     }
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDK0y5WpjZV1tz5g7B6J0xsLYSAu34AgCM&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.27&key=AIzaSyDK0y5WpjZV1tz5g7B6J0xsLYSAu34AgCM&signed_in=true&callback=initMap" async defer></script>
 
 <script type="text/javascript">
     function loadGallery() {

@@ -23,6 +23,7 @@ var register = require('./routes/register');
 var login = require('./routes/login');
 var blog = require('./routes/blogs');
 var gallery = require('./routes/gallery');
+var admin = require('./routes/admin');
 
 var app = express();
 
@@ -61,7 +62,7 @@ app.get('/work/projects', function(req, res) {
 
 app.get('/life/gallery', gallery.pageview);
 
-app.get('/life/gallery/upload', function(req, res) {res.render('admin/upload/gallery');});
+app.get('/life/gallery/upload', auth.permission(0), function(req, res) {res.render('admin/upload/gallery');});
 
 app.post('/life/gallery/upload',
     upload.single("recfile"),
@@ -87,16 +88,15 @@ app.get('/home/status', function(req, res) {
 app.get('/about', auth.restrict, function(req, res) {
     res.render('about');
 });
-app.get('/admin', function(req, res) {
-    res.render('manage');
-});
+
+app.get('/admin', auth.permission(0), admin.blogList);
 
 app.get('/admin/blog/:id?', auth.permission(0), blog.form);
 app.post('/admin/blog/:id?', auth.permission(0), blog.submit);
 
 
 
-// app.get('/register', register.form);
+app.get('/register', register.form);
 app.post('/register', register.submit);
 app.get('/login', login.form);
 app.post('/login', login.submit);

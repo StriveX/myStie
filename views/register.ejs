@@ -1,180 +1,69 @@
-<!DOCTYPE HTML>
-<!--
-    Alpha by HTML5 UP
-    html5up.net | @n33co
-    Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
+<!DOCTYPE html>
 <html>
-    <head>
-        <title>Sign Up</title>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="stylesheet" href="/blog/assets/css/main.css" />
-    </head>
-    <body>
-        <div id="page-wrapper">
+<head>
+    <title>Upload Photo</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+    <link rel="stylesheet" href="/assets/css/main.css" />
+</head>
 
-            <!-- Header -->
-                <% var status = 'register' %>
-                <% include menu %>
+<body>
+<div id="wrapper" class="divided">
 
-                <div id="main" class="wrapper style1">
-                    <div class="container">
-                        <header class="major">
-                            <h2>Sign Up</h2>
-                            <% include messages %>
-                        </header>
-                    <!-- Table -->
-                        <section class="container 50%">
-                            <div class="box">
-                                <form method="post" action="/register" onsubmit="return checkForm()" autocomplete="off">
-                                    <div class="row uniform 50%">
-                                        <div class="6u 12u">
-                                            <input type="text" name="user[name]" id="name" value="" placeholder="Name" />
-                                        </div>
-                                        <div class="6u 12u">
-                                            <input type="text" name="user[email]" id="email" value="" placeholder="Email" />
-                                        </div>
-                                    </div>
-                                    <div class="row uniform 50%">
-                                        <div class="12u">
-                                            <input type="password" name="user[pass]" id="password" value="" placeholder="Password" />
-                                        </div>
-                                    </div>
-                                    <div class="row uniform 50%">
-                                        <div class="12u">
-                                            <input type="password" id="passwordAgain" value="" placeholder="Password Again" />
-                                        </div>
-                                    </div>
-                                <div class="row uniform 50%">
-                                    <div class="6u 12u$(medium)">
-                                        <input type="radio" id="friend" name="user[group]" value='friend' checked>
-                                        <label for="friend">Friend</label>
-                                    </div>
-                                    <div class="6u 12u$(medium)">
-                                        <input type="radio" id="employer" name="user[group]" value='employer'>
-                                        <label for="employer">Employer</label>
-                                    </div>
-                                </div>
-                                <div class="row uniform 50%" id='info_box'>
-                                    <div class="12u">
-                                        <input type="text" name="user[info]" id="info" value="" placeholder="Company Name" />
-                                    </div>
-                                </div>
-                                <div class="row uniform 50%">
-                                    <div class="12u">
-                                        <ul class="actions fit">
-                                            <li><input type="submit" value="Sign Up" class="button fit special" /></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                </form>
-                            </div>
-                        </section>
+    <section class="spotlight style4 content-align-left fullscreen">
+        <div class="content">
+            <h1>Register</h1>
+            <% include messages %>
+            <form method="post" action="/register" onsubmit="return checkForm()" id="register-form">
+                <!--<div class="well">Account is used to display relevant content for different group. N</div>-->
+                <div class="field third first">
+                    <input type="radio" name="user[type]" id="registerType1" value="employer" onclick="javascript:typeCheck();" checked />
+                    <label for="registerType1">Employer</label>
+                </div>
+                <div class="field third">
+                    <input type="radio" name="user[type]" id="registerType2" value="friend" onclick="javascript:typeCheck();" />
+                    <label for="registerType2"> Friend</label>
+                </div>
+
+                <div class="field half first">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name" name="user[name]" placeholder="Name" required autocomplete="off">
+                </div>
+                <div class="field half">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input type="email" class="form-control" id="email" name="user[email]" placeholder="Email" required autocomplete="off">
+                </div>
+                <div class="field first">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="user[pass]" placeholder="Password" required autocomplete="off">
+                </div>
+
+
+                <div id="employerField" style="display:block">
+                    <div class="field first">
+                        <label for="name">Organization Name</label>
+                        <input type="text" class="form-control" id="name" name="user[orgname]" placeholder="Organization Name">
+                    </div>
+                    <div class="field first">
+                        <label for="name">Website</label>
+                        <input type="text" class="form-control" id="name" name="user[website]" placeholder="Website">
                     </div>
                 </div>
 
-            <!-- Footer -->
-                <footer id="footer">
-                    <ul class="icons">
-                        <li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-                        <li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-                        <li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
-                        <li><a href="#" class="icon fa-github"><span class="label">Github</span></a></li>
-                        <li><a href="#" class="icon fa-dribbble"><span class="label">Dribbble</span></a></li>
-                        <li><a href="#" class="icon fa-google-plus"><span class="label">Google+</span></a></li>
-                    </ul>
-                    <ul class="copyright">
-                        <li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-                    </ul>
-                </footer>
-
+                <div class="alert alert-danger" id="register-alert" role="alert" style="display: none"></div>
+                <ul class="actions">
+                    <li><a href="javascript:{}" class="button special" onclick="document.getElementById('register-form').submit(); return false;">Register</a></li>
+                    <li><a href="/login" class="button">Log in</a></li>
+                </ul>
+            </form>
         </div>
+        <div class="image">
+            <img src="images/bg_01.jpg" alt="" />
+        </div>
+    </section>
+</div>
 
-        <!-- Scripts -->
-            <script src="/assets/js/jquery.min.js"></script>
-            <script src="/assets/js/jquery.scrolly.min.js"></script>
-            <script src="/assets/js/jquery.dropotron.min.js"></script>
-            <script src="/assets/js/jquery.scrollex.min.js"></script>
-            <script src="/assets/js/skel.min.js"></script>
-            <script src="/assets/js/util.js"></script>
-            <script src="/assets/js/main.js"></script>
-            <script>
-                function checkForm() {
-                    var ok = true;
-
-                    var name = document.getElementById("name");
-                    if (name.value == "") {
-                        name.style.borderColor = "#E34234";
-                        ok = false;
-                    }
-                    var email = document.getElementById("email");
-                    if (email.value == "") {
-                        email.style.borderColor = "#E34234";
-                        ok = false;
-                    } else {
-                        var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-                        if (!re.test(email.value)) {
-                            email.style.borderColor = "#E34234";
-                            ok=false;
-                        }
-                    }
-                    var pass1 = document.getElementById("password");
-                    var pass2 = document.getElementById("passwordAgain");
-                    if (pass1.value == "") {
-                        pass1.style.borderColor = "#E34234";
-                        ok = false;
-                    }
-                    if (pass2.value == "") {
-                        pass2.style.borderColor = "#E34234";
-                        ok = false;
-                    }
-                    if (pass1.value != pass2.value) {
-                        pass1.style.borderColor = "#E34234";
-                        pass2.style.borderColor = "#E34234";
-                        pass1.value = "";
-                        pass2.value = "";
-                        ok = false;
-                    }
-                    return ok;
-                }
-
-                $(document).ready(function () {
-                    $('#info_box').hide();
-                    $('input[name="user[group]"]:radio').change(function () {
-                        switch ($(this).val()) {
-                            case 'friend':
-                                $('#info_box').hide();
-                                break;
-                            case 'employer':
-                                $('#info_box').show();
-                                break;
-                        }
-                    });
-                });
-            </script>
-
-    </body>
+<script src="/assets/js/login.js"></script>
+</body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
